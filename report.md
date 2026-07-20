@@ -80,6 +80,8 @@ Hospital characteristics were decoded from `NIS_STRATUM`. P-values are shown onc
 | MDS | 10.71% | 10.57% | −0.14 | −0.004 |
 | MPN | 16.52% | 20.20% | 3.67 | 0.095 |
 
+**Legend — subtype assignment:** HM subtype categories are mutually exclusive, so each hospitalization appears in exactly one row. All qualifying HM subtype diagnoses were first identified across the diagnosis fields. Hospitalizations with one subtype were assigned that subtype. When multiple subtype groups were present, the first qualifying HM diagnosis in diagnosis-field order determined the displayed subtype; these hospitalizations remain separately flagged as `multiple_hm_groups=1` for sensitivity analysis. The assigned category therefore represents the first-listed HM subtype and not necessarily the biologically dominant malignancy.
+
 ## Admission year
 
 | Year | No sepsis | Sepsis | Difference, pp | SMD |
