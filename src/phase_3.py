@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import duckdb
+from scipy.stats import chi2_contingency, ttest_ind_from_stats
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -155,6 +156,10 @@ def standardized_difference(proportion_1: float, proportion_0: float) -> float:
     return (proportion_1 - proportion_0) / math.sqrt(pooled_variance)
 
 
+def format_p_value(p_value: float) -> str:
+    return "<0.001" if p_value < 0.001 else f"{p_value:.3f}"
+
+
 def weighted_age_summary(
     connection: duckdb.DuckDBPyConnection,
 ) -> list[dict[str, Any]]:
@@ -222,6 +227,19 @@ def main() -> dict[str, Any]:
             "standardized_difference": round(
                 (age_1["mean_age"] - age_0["mean_age"]) / pooled_age_sd, 3
             ),
+            "p_value": format_p_value(
+                float(
+                    ttest_ind_from_stats(
+                        mean1=age_1["mean_age"],
+                        std1=age_1["sd_age"],
+                        nobs1=age_1["unweighted_n"],
+                        mean2=age_0["mean_age"],
+                        std2=age_0["sd_age"],
+                        nobs2=age_0["unweighted_n"],
+                        equal_var=False,
+                    ).pvalue
+                )
+            ),
         }
     )
 
@@ -239,6 +257,23 @@ def main() -> dict[str, Any]:
             """
         ).fetchall()
         result_map = {(bool(row[0]), str(row[1])): row for row in results}
+        tested_levels = [
+            level
+            for level in level_order
+            if level not in {"Missing", "Unknown"}
+            and (False, level) in result_map
+            and (True, level) in result_map
+        ]
+        contingency = [
+            [result_map[(False, level)][2] for level in tested_levels],
+            [result_map[(True, level)][2] for level in tested_levels],
+        ]
+        overall_p_value = (
+            float(chi2_contingency(contingency, correction=False).pvalue)
+            if len(tested_levels) >= 2
+            else 1.0
+        )
+        first_displayed_level = True
         for level in level_order:
             row_0 = result_map.get((False, level), (False, level, 0, 0.0))
             row_1 = result_map.get((True, level), (True, level, 0, 0.0))
@@ -260,8 +295,14 @@ def main() -> dict[str, Any]:
                     "standardized_difference": round(
                         standardized_difference(p1, p0), 3
                     ),
+                    "p_value": (
+                        format_p_value(overall_p_value)
+                        if first_displayed_level
+                        else ""
+                    ),
                 }
             )
+            first_displayed_level = False
         missing_level = next(
             (level for level in ["Missing", "Unknown"] if level in level_order), None
         )
@@ -318,6 +359,8 @@ def main() -> dict[str, Any]:
             "HM and A41-only sepsis phenotypes remain draft pending investigator review.",
             "Hospital characteristics are decoded from NIS_STRATUM.",
             "Comorbidity burden is deferred until a validated Charlson or Elixhauser method is selected.",
+            "P-values are approximate unadjusted tests based on sampled discharge counts and do not incorporate hospital clustering.",
+            "Missing and unknown categories are displayed but excluded from categorical chi-square tests.",
         ],
     }
     (OUTPUT_DIR / "phase_3_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
