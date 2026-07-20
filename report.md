@@ -139,3 +139,16 @@ The Charlson Comorbidity Index (CCI) uses the Quan ICD-10 mapping and original C
 There were 17 missing LOS values in the no-sepsis cohort and 7 in the sepsis cohort. `DIED` was missing for 375 no-sepsis and 66 sepsis discharges. P-values use sampled discharge records and do not account for hospital clustering. These are unadjusted descriptive comparisons and do not establish causality.
 
 HM discharges with documented sepsis had a higher mean cancer-excluded CCI, longer mean hospital stay, and higher in-hospital mortality than HM discharges without documented sepsis. All three overall comparisons had p<0.001.
+
+## Unweighted Sample Results
+
+This separate table reports the actual sampled NIS discharge records without applying `DISCWT`. Percentages use the available unweighted records in each cohort. These values describe the NIS sample rather than national hospitalization estimates.
+
+| Outcome | Level | No sepsis | Sepsis | P-value | Test |
+|---|---|---:|---:|---:|---|
+| Charlson Comorbidity Index excluding cancer | Mean (SD) | 1.84 (1.90) | 2.09 (1.92) | <0.001 | Welch t-test |
+| Charlson category | 0 (reference) | 263,920 (31.55%) | 38,060 (24.02%) | <0.001 | Pearson chi-square |
+|  | 1–2 | 323,356 (38.65%) | 65,490 (41.34%) |  |  |
+|  | ≥3 | 249,295 (29.80%) | 54,871 (34.64%) |  |  |
+| Length of stay, days | Mean (SD) | 6.88 (8.20) | 11.13 (13.45) | <0.001 | Welch t-test |
+| In-hospital mortality | Died | 26,527 (3.17%) | 27,210 (17.18%) | <0.001 | Pearson chi-square |

@@ -221,8 +221,41 @@ def main() -> dict[str, Any]:
             "p_value": format_p_value(mortality_p), "test": "Pearson chi-square",
         },
     ])
+    unweighted_rows = [
+        {
+            "outcome": "Charlson Comorbidity Index excluding cancer",
+            "level": "Mean (SD)",
+            "no_sepsis": f'{cci_stats[False]["raw_mean"]:.2f} ({cci_stats[False]["raw_sd"]:.2f})',
+            "sepsis": f'{cci_stats[True]["raw_mean"]:.2f} ({cci_stats[True]["raw_sd"]:.2f})',
+            "p_value": format_p_value(cci_p), "test": "Welch t-test",
+        }
+    ]
+    for index, row in enumerate(cci_category_rows):
+        unweighted_rows.append({
+            "outcome": "Charlson category" if index == 0 else "",
+            "level": row["level"],
+            "no_sepsis": f'{row["no_sepsis_unweighted_n"]:,} ({100 * row["no_sepsis_unweighted_n"] / totals[False]["unweighted"]:.2f}%)',
+            "sepsis": f'{row["sepsis_unweighted_n"]:,} ({100 * row["sepsis_unweighted_n"] / totals[True]["unweighted"]:.2f}%)',
+            "p_value": format_p_value(cci_category_p) if index == 0 else "",
+            "test": "Pearson chi-square" if index == 0 else "",
+        })
+    unweighted_rows.extend([
+        {
+            "outcome": "Length of stay, days", "level": "Mean (SD)",
+            "no_sepsis": f'{los_stats[False]["raw_mean"]:.2f} ({los_stats[False]["raw_sd"]:.2f})',
+            "sepsis": f'{los_stats[True]["raw_mean"]:.2f} ({los_stats[True]["raw_sd"]:.2f})',
+            "p_value": format_p_value(los_p), "test": "Welch t-test",
+        },
+        {
+            "outcome": "In-hospital mortality", "level": "Died",
+            "no_sepsis": f'{mortality[False]["events"]:,} ({100 * mortality[False]["events"] / mortality[False]["valid_n"]:.2f}%)',
+            "sepsis": f'{mortality[True]["events"]:,} ({100 * mortality[True]["events"] / mortality[True]["valid_n"]:.2f}%)',
+            "p_value": format_p_value(mortality_p), "test": "Pearson chi-square",
+        },
+    ])
     write_csv(OUTPUT_DIR / "cci_categories_by_sepsis.csv", cci_category_rows)
     write_csv(OUTPUT_DIR / "clinical_outcomes_by_sepsis.csv", summary_rows)
+    write_csv(OUTPUT_DIR / "clinical_outcomes_by_sepsis_unweighted.csv", unweighted_rows)
     summary = {
         "unit": "NIS inpatient discharge, not unique patient",
         "cci_definition": "Quan ICD-10 mapping; original Charlson weights; cancer and metastatic cancer excluded; no age points; hierarchy applied.",
@@ -232,6 +265,7 @@ def main() -> dict[str, Any]:
         "los_missing": {"no_sepsis": totals[False]["unweighted"] - los_stats[False]["n"], "sepsis": totals[True]["unweighted"] - los_stats[True]["n"]},
         "died_missing": {"no_sepsis": totals[False]["unweighted"] - mortality[False]["valid_n"], "sepsis": totals[True]["unweighted"] - mortality[True]["valid_n"]},
         "table": summary_rows,
+        "unweighted_table": unweighted_rows,
     }
     (OUTPUT_DIR / "phase_5_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     connection.close()
