@@ -173,3 +173,17 @@ Documented inpatient palliative-care use was defined as normalized ICD-10-CM `Z5
 | Crude weighted odds ratio, sepsis vs no sepsis | 2.798 | 2.753 to 2.842 | <0.001 |
 
 The estimates use `DISCWT`. Confidence intervals and p-values account for year-specific `NIS_STRATUM` through Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, sampled discharges were treated as variance units. Consequently, these are strata-adjusted approximations rather than full NIS survey-design variance estimates. The association is unadjusted and does not establish causality. Covariate-adjusted probabilities will be estimated later in Command 16B.
+
+## Command 12C: Annual Palliative-Care Utilization by Sepsis Status
+
+Values are weighted percentages of hospitalizations with documented inpatient palliative-care use. Confidence intervals use the same strata-adjusted approximation described above.
+
+| Year | No sepsis, weighted % (95% CI) | Sepsis, weighted % (95% CI) |
+|---:|---:|---:|
+| 2016 | 5.50% (5.37%–5.63%) | 13.94% (13.48%–14.41%) |
+| 2017 | 5.93% (5.80%–6.06%) | 14.75% (14.29%–15.23%) |
+| 2018 | 6.08% (5.95%–6.22%) | 15.67% (15.21%–16.15%) |
+| 2019 | 6.24% (6.10%–6.37%) | 15.55% (15.10%–16.01%) |
+| 2020 | 6.85% (6.71%–7.00%) | 17.04% (16.56%–17.52%) |
+| 2021 | 7.46% (7.31%–7.61%) | 18.48% (17.99%–18.98%) |
+| 2022 | 8.06% (7.89%–8.22%) | 19.34% (18.81%–19.89%) |

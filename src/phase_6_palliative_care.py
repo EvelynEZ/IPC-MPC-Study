@@ -164,6 +164,28 @@ def main() -> dict[str, Any]:
             "ci_95_upper_percent": round(100 * result["ci_upper"], 2),
         })
     write_csv(OUTPUT_DIR / "palliative_care_prevalence.csv", rows)
+
+    annual_rows: list[dict[str, Any]] = []
+    years = frame["year"].to_numpy(dtype=int)
+    for year in sorted(frame["year"].unique()):
+        for status, label in [
+            (False, "No documented sepsis"),
+            (True, "Documented sepsis"),
+        ]:
+            domain = (years == year) & (exposure == status)
+            result = weighted_prevalence(weights_array, outcome, strata, domain)
+            annual_rows.append({
+                "year": int(year),
+                "sepsis_status": label,
+                "unweighted_sample_n": result["unweighted_n"],
+                "unweighted_palliative_care_n": result["unweighted_events"],
+                "weighted_hospitalizations": round(result["weighted_n"]),
+                "weighted_palliative_care_n": round(result["weighted_events"]),
+                "weighted_palliative_care_percent": round(100 * result["estimate"], 2),
+                "ci_95_lower_percent": round(100 * result["ci_lower"], 2),
+                "ci_95_upper_percent": round(100 * result["ci_upper"], 2),
+            })
+    write_csv(OUTPUT_DIR / "annual_palliative_care_by_sepsis.csv", annual_rows)
     summary = {
         "definition": "Documented inpatient palliative-care use: normalized Z51.5 (Z515) in any diagnosis position.",
         "normalization": "Uppercase; decimal points and spaces removed in the Phase 1–2 cohort build.",
@@ -175,6 +197,7 @@ def main() -> dict[str, Any]:
         },
         "variance_note": "NIS_STRATUM and year-specific strata used in Taylor linearization; sampled discharges are variance units because HOSP_NIS is unavailable by study decision. Not a full NIS design variance estimate.",
         "prevalence_table": rows,
+        "annual_prevalence_table": annual_rows,
         "comparison": {
             "absolute_difference_percentage_points": round(100 * contrast["difference"], 2),
             "difference_ci_95_lower": round(100 * contrast["difference_ci_lower"], 2),
