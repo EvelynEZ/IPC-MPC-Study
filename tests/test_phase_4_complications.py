@@ -4,7 +4,12 @@ import unittest
 
 import duckdb
 
-from src.phase_4_complications import COMPLICATIONS, code_condition
+from src.phase_4_complications import (
+    COMPLICATIONS,
+    benjamini_hochberg,
+    code_condition,
+    two_proportion_p_value,
+)
 
 
 class ComplicationCodeTests(unittest.TestCase):
@@ -33,6 +38,16 @@ class ComplicationCodeTests(unittest.TestCase):
     def test_dvt_list_does_not_include_chronic_code(self) -> None:
         self.assertTrue(self.matches("acute_lower_extremity_dvt", "I82401"))
         self.assertFalse(self.matches("acute_lower_extremity_dvt", "I82501"))
+
+    def test_two_proportion_test(self) -> None:
+        self.assertEqual(two_proportion_p_value(10, 100, 10, 100), 1.0)
+        self.assertLess(two_proportion_p_value(50, 100, 10, 100), 0.001)
+
+    def test_benjamini_hochberg_is_monotonic_and_bounded(self) -> None:
+        adjusted = benjamini_hochberg([0.001, 0.01, 0.5])
+        self.assertTrue(all(0 <= value <= 1 for value in adjusted))
+        self.assertLessEqual(adjusted[0], adjusted[1])
+        self.assertLessEqual(adjusted[1], adjusted[2])
 
 
 if __name__ == "__main__":

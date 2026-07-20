@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -105,6 +106,37 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
+def two_proportion_p_value(
+    events_1: int, total_1: int, events_0: int, total_0: int
+) -> float:
+    """Two-sided pooled two-proportion z-test using sampled discharge counts."""
+    pooled = (events_1 + events_0) / (total_1 + total_0)
+    standard_error = math.sqrt(
+        pooled * (1 - pooled) * (1 / total_1 + 1 / total_0)
+    )
+    if standard_error == 0:
+        return 1.0
+    z_score = (events_1 / total_1 - events_0 / total_0) / standard_error
+    return math.erfc(abs(z_score) / math.sqrt(2))
+
+
+def benjamini_hochberg(p_values: list[float]) -> list[float]:
+    """Return false-discovery-rate-adjusted p-values in original order."""
+    count = len(p_values)
+    ordered = sorted(enumerate(p_values), key=lambda item: item[1])
+    adjusted = [1.0] * count
+    running_minimum = 1.0
+    for reverse_rank, (index, p_value) in enumerate(reversed(ordered), start=1):
+        rank = count - reverse_rank + 1
+        running_minimum = min(running_minimum, p_value * count / rank)
+        adjusted[index] = min(running_minimum, 1.0)
+    return adjusted
+
+
+def format_p_value(p_value: float) -> str:
+    return "<0.001" if p_value < 0.001 else f"{p_value:.3f}"
+
+
 def main() -> dict[str, Any]:
     if not COHORT_DATABASE.exists():
         raise RuntimeError("Run Phase 1–2 first to create the cached HM cohort.")
@@ -169,8 +201,22 @@ def main() -> dict[str, Any]:
                 "sepsis_weighted_percent": round(100 * p1, 2),
                 "absolute_difference_percentage_points": round(100 * (p1 - p0), 2),
                 "prevalence_ratio": round(p1 / p0, 2) if p0 else None,
+                "_p_value": two_proportion_p_value(
+                    result[True]["unweighted"],
+                    totals[True]["unweighted"],
+                    result[False]["unweighted"],
+                    totals[False]["unweighted"],
+                ),
             }
         )
+    adjusted_p_values = benjamini_hochberg(
+        [float(row["_p_value"]) for row in table_rows]
+    )
+    for row, adjusted_p_value in zip(table_rows, adjusted_p_values):
+        raw_p_value = float(row.pop("_p_value"))
+        row["p_value_unadjusted"] = format_p_value(raw_p_value)
+        row["p_value_fdr_adjusted"] = format_p_value(adjusted_p_value)
+        row["fdr_significant_at_0_05"] = adjusted_p_value < 0.05
     connection.close()
     write_csv(OUTPUT_DIR / "complications_by_sepsis.csv", table_rows)
 
@@ -178,6 +224,7 @@ def main() -> dict[str, Any]:
         "unit": "NIS inpatient discharge, not unique patient",
         "exposure": "Documented sepsis defined by A41* in any diagnosis position",
         "interpretation": "Complications are co-documented during the same hospitalization; temporal order is not available.",
+        "inference_note": "P-values use unweighted sampled discharge counts and do not account for hospital clustering; FDR-adjusted values control multiplicity across the displayed complication comparisons.",
         "no_sepsis_unweighted_n": totals[False]["unweighted"],
         "sepsis_unweighted_n": totals[True]["unweighted"],
         "largest_absolute_differences": sorted(
