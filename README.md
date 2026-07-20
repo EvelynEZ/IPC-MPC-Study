@@ -29,6 +29,10 @@ python scripts/count_young_asian_female_discharges.py
 
 The script reports the unweighted discharge count and the `DISCWT` survey-weighted national estimate. NIS identifies discharge records rather than unique longitudinal patients. A lightweight dataset fingerprint makes unchanged reruns use the cached aggregate in `outputs/cache/`; pass `--refresh` to force recomputation.
 
+### Run without using the terminal
+
+On macOS, double-click `launch_notebook.command` in Finder. It opens `notebooks/demographic_smoke_test.ipynb` in JupyterLab; click the notebook's **Run** button to execute the analysis. You can also open the notebook directly in an editor with Jupyter support and select the repository's `.venv` Python environment.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.

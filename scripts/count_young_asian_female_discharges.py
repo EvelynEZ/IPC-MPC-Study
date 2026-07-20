@@ -72,12 +72,12 @@ def run_query(files: list[Path]) -> dict[str, object]:
     }
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--refresh", action="store_true", help="Ignore a valid cached result."
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     files = dataset_files()
     dataset_fingerprint = fingerprint(files)
