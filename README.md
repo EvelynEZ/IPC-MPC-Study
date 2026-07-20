@@ -19,6 +19,16 @@ python scripts/inspect_dataset.py
 
 The inspection script reports file count, total size, schema, and row count. It deliberately does not print patient-level rows.
 
+## Smoke-test analysis
+
+Count Asian/Pacific Islander female discharges for children ages 0–10:
+
+```bash
+python scripts/count_young_asian_female_discharges.py
+```
+
+The script reports the unweighted discharge count and the `DISCWT` survey-weighted national estimate. NIS identifies discharge records rather than unique longitudinal patients. A lightweight dataset fingerprint makes unchanged reruns use the cached aggregate in `outputs/cache/`; pass `--refresh` to force recomputation.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.
