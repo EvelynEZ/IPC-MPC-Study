@@ -1,0 +1,24 @@
+# Local configuration and secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Data and generated artifacts (keep source medical data outside Git)
+data/
+outputs/
+*.parquet
+*.duckdb
+*.duckdb.wal
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Editors / operating systems
+.DS_Store
+.idea/
+.vscode/
