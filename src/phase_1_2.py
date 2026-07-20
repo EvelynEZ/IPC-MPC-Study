@@ -235,11 +235,14 @@ def export_summaries(
             count(*)::BIGINT AS unweighted_hm_discharges,
             round(sum(DISCWT), 0)::DOUBLE AS weighted_hm_discharges_2016_2022,
             count(*) FILTER (WHERE sepsis)::BIGINT AS unweighted_with_sepsis,
+            round(sum(DISCWT * sepsis::INTEGER), 0)::DOUBLE AS weighted_with_sepsis,
             round(100.0 * avg(sepsis::INTEGER), 2) AS unweighted_sepsis_percent,
             round(100.0 * sum(DISCWT * sepsis::INTEGER) / sum(DISCWT), 2) AS weighted_sepsis_percent,
             count(*) FILTER (WHERE palliative_care)::BIGINT AS unweighted_with_palliative_care,
+            round(sum(DISCWT * palliative_care::INTEGER), 0)::DOUBLE AS weighted_with_palliative_care,
             round(100.0 * sum(DISCWT * palliative_care::INTEGER) / sum(DISCWT), 2) AS weighted_palliative_care_percent,
             count(*) FILTER (WHERE multiple_hm_groups)::BIGINT AS unweighted_with_multiple_hm_groups,
+            round(sum(DISCWT * multiple_hm_groups::INTEGER), 0)::DOUBLE AS weighted_with_multiple_hm_groups,
             round(100.0 * sum(DISCWT * multiple_hm_groups::INTEGER) / sum(DISCWT), 2) AS weighted_multiple_hm_groups_percent
         FROM hm_cohort
         """,
@@ -330,6 +333,52 @@ def export_summaries(
     write_csv(OUTPUT_DIR / "cohort_by_subtype.csv", by_subtype)
     write_csv(OUTPUT_DIR / "cohort_overlap.csv", overlap)
     write_csv(OUTPUT_DIR / "stratum_decode_validation.csv", stratum_validation)
+    review_overview = [
+        {
+            "cohort_measure": "All adult HM discharges",
+            "unweighted_n": overall["unweighted_hm_discharges"],
+            "weighted_n_2016_2022": overall["weighted_hm_discharges_2016_2022"],
+            "weighted_percent": 100.0,
+        },
+        {
+            "cohort_measure": "Documented sepsis (A41*)",
+            "unweighted_n": overall["unweighted_with_sepsis"],
+            "weighted_n_2016_2022": overall["weighted_with_sepsis"],
+            "weighted_percent": overall["weighted_sepsis_percent"],
+        },
+        {
+            "cohort_measure": "Documented inpatient palliative-care use (Z51.5)",
+            "unweighted_n": overall["unweighted_with_palliative_care"],
+            "weighted_n_2016_2022": overall["weighted_with_palliative_care"],
+            "weighted_percent": overall["weighted_palliative_care_percent"],
+        },
+        {
+            "cohort_measure": "Multiple HM groups",
+            "unweighted_n": overall["unweighted_with_multiple_hm_groups"],
+            "weighted_n_2016_2022": overall["weighted_with_multiple_hm_groups"],
+            "weighted_percent": overall["weighted_multiple_hm_groups_percent"],
+        },
+    ]
+    write_csv(OUTPUT_DIR / "review_table_1_cohort_overview.csv", review_overview)
+
+    subtype_labels = {item["id"]: item["label"] for item in config["subtypes"]}
+    review_subtypes = [
+        {
+            "hm_subtype": subtype_labels.get(row["hm_subtype"], row["hm_subtype"]),
+            "unweighted_n": row["unweighted_hm_discharges"],
+            "weighted_n_2016_2022": row["weighted_hm_discharges_2016_2022"],
+            "sepsis_unweighted_n": row["unweighted_with_sepsis"],
+            "sepsis_weighted_percent": row["weighted_sepsis_percent"],
+            "palliative_care_unweighted_n": row[
+                "unweighted_with_palliative_care"
+            ],
+            "palliative_care_weighted_percent": row[
+                "weighted_palliative_care_percent"
+            ],
+        }
+        for row in by_subtype
+    ]
+    write_csv(OUTPUT_DIR / "review_table_3_subtypes.csv", review_subtypes)
     (OUTPUT_DIR / "cohort_summary.json").write_text(
         json.dumps(overall, indent=2) + "\n"
     )
