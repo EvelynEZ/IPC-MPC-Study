@@ -152,3 +152,24 @@ This separate table reports the actual sampled NIS discharge records without app
 |  | ≥3 | 249,295 (29.80%) | 54,871 (34.64%) |  |  |
 | Length of stay, days | Mean (SD) | 6.88 (8.20) | 11.13 (13.45) | <0.001 | Welch t-test |
 | In-hospital mortality | Died | 26,527 (3.17%) | 27,210 (17.18%) | <0.001 | Pearson chi-square |
+
+---
+
+# Documented Inpatient Palliative-Care Use
+
+Documented inpatient palliative-care use was defined as normalized ICD-10-CM `Z51.5` (`Z515`) in any diagnosis position. Diagnosis codes were converted to uppercase and stripped of decimal points and spaces. All 80,733 flagged sample records contained normalized `Z515`, with zero discordant records. This measure reflects documentation of inpatient palliative-care use and must not be described as a palliative-care consultation.
+
+## Task 12A–B: Prevalence Overall and by Sepsis Status
+
+| Cohort | Unweighted sample n | Unweighted palliative-care n | Weighted hospitalizations | Weighted palliative-care n | Weighted palliative-care % (95% CI) |
+|---|---:|---:|---:|---:|---:|
+| All adult HM hospitalizations | 994,992 | 80,733 | 4,974,958 | 403,665 | 8.11% (8.06%–8.17%) |
+| HM without documented sepsis | 836,571 | 54,772 | 4,182,853 | 273,860 | 6.55% (6.49%–6.60%) |
+| HM with documented sepsis | 158,421 | 25,961 | 792,105 | 129,805 | 16.39% (16.21%–16.57%) |
+
+| Comparison | Estimate | 95% CI | P-value |
+|---|---:|---:|---:|
+| Absolute prevalence difference, sepsis minus no sepsis | 9.84 percentage points | 9.65 to 10.03 | <0.001 |
+| Crude weighted odds ratio, sepsis vs no sepsis | 2.798 | 2.753 to 2.842 | <0.001 |
+
+The estimates use `DISCWT`. Confidence intervals and p-values account for year-specific `NIS_STRATUM` through Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, sampled discharges were treated as variance units. Consequently, these are strata-adjusted approximations rather than full NIS survey-design variance estimates. The association is unadjusted and does not establish causality. Covariate-adjusted probabilities will be estimated later in Command 16B.

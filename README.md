@@ -60,6 +60,10 @@ Double-click `launch_phase_4.command` to open the executed complication-comparis
 
 Double-click `launch_phase_5.command` to open the executed clinical-outcomes notebook. It compares the cancer-excluded Charlson Comorbidity Index, length of stay, and in-hospital mortality between HM discharges with and without documented sepsis.
 
+## Palliative-care utilization
+
+Double-click `launch_phase_6.command` to open the executed Task 12A–B notebook. It reports documented inpatient palliative-care use overall and by sepsis status, including weighted prevalence, confidence intervals, an absolute difference, and a crude weighted odds ratio.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.
