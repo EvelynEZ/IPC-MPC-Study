@@ -33,6 +33,20 @@ The script reports the unweighted discharge count and the `DISCWT` survey-weight
 
 On macOS, double-click `launch_notebook.command` in Finder. It opens `notebooks/demographic_smoke_test.ipynb` in JupyterLab; click the notebook's **Run** button to execute the analysis. You can also open the notebook directly in an editor with Jupyter support and select the repository's `.venv` Python environment.
 
+## Study phases 1–2
+
+Open `notebooks/phase_1_2_cohort_review.ipynb` and choose **Run → Run All Cells**. It presents:
+
+- the Phase 1 data-readiness audit;
+- phenotype decisions still requiring review;
+- the cached Phase 2 adult HM cohort;
+- annual, subtype, sepsis, palliative-care, and overlap summaries;
+- copy/paste-friendly CSV output below every table.
+
+The versioned phenotype is `config/hm_phenotype_v0_1.json` and remains explicitly marked as a draft until its ICD-10 rules are clinically reviewed. The record-level derived cohort and aggregate outputs remain local under `outputs/` and are not committed.
+
+For a no-terminal workflow on macOS, double-click `launch_phase_1_2.command` in Finder.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.

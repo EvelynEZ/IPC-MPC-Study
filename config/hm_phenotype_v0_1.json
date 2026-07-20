@@ -1,0 +1,81 @@
+{
+  "name": "Adult hematologic-malignancy hospitalization phenotype",
+  "version": "0.1-draft",
+  "review_status": "Draft for investigator and clinical code review; not frozen",
+  "code_normalization": "Uppercase; remove decimal points and spaces",
+  "minimum_age": 18,
+  "sepsis": {
+    "label": "Documented sepsis (narrow definition)",
+    "include_prefixes": ["A41"],
+    "note": "A41-only definition from the proposal; broader explicit-sepsis sensitivity definition remains undecided."
+  },
+  "palliative_care": {
+    "label": "Documented inpatient palliative-care use",
+    "include_exact": ["Z515"]
+  },
+  "subtypes": [
+    {
+      "id": "lymphoma",
+      "label": "Lymphoma",
+      "include_prefixes": ["C81", "C82", "C83", "C84", "C85", "C86", "C880", "C884"],
+      "exclude_exact": ["C810A", "C811A", "C812A", "C813A", "C814A", "C817A", "C819A", "C820A", "C821A", "C822A", "C823A", "C824A", "C825A", "C826A", "C828A", "C829A", "C830A", "C831A", "C833A", "C835A", "C837A", "C838A", "C839A", "C840A", "C841A", "C844A", "C846A", "C847B", "C84AA", "C84ZA", "C849A", "C851A", "C852A", "C858A", "C859A", "C8601", "C8611", "C8621", "C8631", "C8641", "C8651", "C8661", "C8801", "C8841", "C9111", "C9141"],
+      "review_note": "Several suffix-A and site-specific exclusions require clinical verification before freezing."
+    },
+    {
+      "id": "aml",
+      "label": "Acute myeloid leukemia",
+      "include_prefixes": ["C920", "C926", "C92A", "C924", "C925", "C92Z", "C929"],
+      "exclude_exact": ["C9201", "C9261", "C92A1", "C9241", "C9251", "C92Z1", "C9291"]
+    },
+    {
+      "id": "cml",
+      "label": "Chronic myeloid leukemia",
+      "include_prefixes": ["C921", "C922"],
+      "exclude_exact": ["C9211", "C9221"]
+    },
+    {
+      "id": "cll_chronic_leukemia",
+      "label": "CLL/chronic leukemia",
+      "include_prefixes": ["C911", "C951"],
+      "exclude_exact": ["C9511"],
+      "review_note": "Confirm whether C91.11 (in remission) should also be excluded and how CLL/SLL overlap should be handled."
+    },
+    {
+      "id": "all",
+      "label": "Acute lymphoblastic/unspecified acute leukemia",
+      "include_prefixes": ["C910", "C950"],
+      "exclude_exact": ["C9101", "C9501"]
+    },
+    {
+      "id": "other_leukemia",
+      "label": "Other leukemia",
+      "include_prefixes": ["C913", "C915", "C916", "C91A", "C91Z", "C919", "C930", "C931", "C93Z", "C939", "C914"],
+      "exclude_exact": ["C9131", "C9151", "C9161", "C91A1", "C91Z1", "C9191", "C9301", "C9311", "C93Z1", "C9391"]
+    },
+    {
+      "id": "myeloma_plasma_cell",
+      "label": "Multiple myeloma/plasma-cell neoplasm",
+      "include_prefixes": ["C90"],
+      "exclude_exact": ["C9001", "C9011", "C9021", "C9031"]
+    },
+    {
+      "id": "mds",
+      "label": "Myelodysplastic disease",
+      "include_prefixes": ["C946", "D46"],
+      "exclude_exact": []
+    },
+    {
+      "id": "mpn",
+      "label": "Myeloproliferative neoplasm",
+      "include_prefixes": ["D45", "D473", "D474", "D7581"],
+      "exclude_exact": []
+    }
+  ],
+  "decisions_required_before_freeze": [
+    "Clinically verify every lymphoma exclusion, especially suffix-A/site codes.",
+    "Decide whether remission-coded hematologic malignancies are excluded consistently across all groups.",
+    "Decide how CLL/SLL coding overlap should be classified.",
+    "Decide whether A41-only sepsis is primary and whether a broader explicit-sepsis definition is a sensitivity analysis.",
+    "Confirm whether first-listed qualifying HM diagnosis is the primary subtype rule."
+  ]
+}
