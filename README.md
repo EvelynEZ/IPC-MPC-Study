@@ -41,6 +41,7 @@ Open `notebooks/phase_1_2_cohort_review.ipynb` and choose **Run → Run All Cell
 - phenotype decisions still requiring review;
 - the cached Phase 2 adult HM cohort;
 - annual, subtype, sepsis, palliative-care, and overlap summaries;
+- stratum-derived region, division, ownership, location/teaching, and bed-size summaries;
 - copy/paste-friendly CSV output below every table.
 
 The versioned phenotype is `config/hm_phenotype_v0_1.json` and remains explicitly marked as a draft until its ICD-10 rules are clinically reviewed. The record-level derived cohort and aggregate outputs remain local under `outputs/` and are not committed.

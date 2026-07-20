@@ -19,6 +19,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = REPO_ROOT / "config/hm_phenotype_v0_1.json"
 OUTPUT_DIR = REPO_ROOT / "outputs/phase_1_2"
 DATABASE_PATH = OUTPUT_DIR / "hm_cohort.duckdb"
+ANALYSIS_VERSION = "2-stratum-derived-hospital-characteristics"
 
 
 def load_dataset_files() -> list[Path]:
@@ -33,7 +34,7 @@ def load_dataset_files() -> list[Path]:
 
 
 def dataset_fingerprint(files: list[Path], config_bytes: bytes) -> str:
-    digest = hashlib.sha256(config_bytes)
+    digest = hashlib.sha256(ANALYSIS_VERSION.encode() + config_bytes)
     for path in files:
         stat = path.stat()
         digest.update(f"{path.name}:{stat.st_size}:{stat.st_mtime_ns}\n".encode())
@@ -90,35 +91,41 @@ def audit_rows(columns: list[str]) -> list[dict[str, str]]:
         (name for name in columns if name.startswith("I10_DX") and name[6:].isdigit()),
         key=lambda name: int(name[6:]),
     )
-    procedure_columns = [
-        name for name in columns if name.startswith("I10_PR") and name[6:].isdigit()
-    ]
-    groups = [
-        ("Diagnosis fields", bool(dx_columns), f"{len(dx_columns)} fields available"),
-        ("Adult cohort", "AGE" in column_set, "Requires AGE"),
-        ("Discharge weights", "DISCWT" in column_set, "Requires DISCWT"),
-        ("Survey strata", "NIS_STRATUM" in column_set, "Requires NIS_STRATUM"),
-        ("Hospital cluster", "HOSP_NIS" in column_set, "Required for final survey variance estimation"),
-        ("Procedure codes", bool(procedure_columns), "Required for mechanical ventilation"),
-        (
-            "Hospital characteristics",
-            all(
-                name in column_set
-                for name in ["HOSP_REGION", "HOSP_BEDSIZE", "HOSP_LOCTEACH"]
-            ),
-            "Requires explicit region, bed-size, and location/teaching variables",
-        ),
-        ("Mortality", "DIED" in column_set, "Requires DIED"),
-        ("Length of stay", "LOS" in column_set, "Requires LOS"),
-    ]
-    return [
-        {
+    def row(component: str, available: bool, detail: str) -> dict[str, str]:
+        return {
             "component": component,
             "status": "READY" if available else "MISSING/BLOCKED",
             "detail": detail,
         }
-        for component, available, detail in groups
+
+    rows = [
+        row("Diagnosis fields", bool(dx_columns), f"{len(dx_columns)} fields available"),
+        row("Adult cohort", "AGE" in column_set, "Requires AGE"),
+        row("Discharge weights", "DISCWT" in column_set, "Requires DISCWT"),
+        row("Survey strata", "NIS_STRATUM" in column_set, "Requires NIS_STRATUM"),
+        row(
+            "Hospital cluster",
+            "HOSP_NIS" in column_set,
+            "Required for final survey variance estimation; not derivable from NIS_STRATUM",
+        ),
+        row("Mortality", "DIED" in column_set, "Requires DIED"),
+        row("Length of stay", "LOS" in column_set, "Requires LOS"),
     ]
+    rows.append(
+        {
+            "component": "Hospital characteristics",
+            "status": "DERIVED/REVIEW" if "NIS_STRATUM" in column_set else "MISSING/BLOCKED",
+            "detail": "Division, region, control, location/teaching, and bed size decoded from four-digit NIS_STRATUM",
+        }
+    )
+    rows.append(
+        {
+            "component": "Mechanical ventilation",
+            "status": "OUT OF SCOPE",
+            "detail": "Removed from the requested analysis; procedure fields are not required",
+        }
+    )
+    return rows
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -177,7 +184,35 @@ def create_cohort(
         SELECT
             *,
             len(hm_groups)::UTINYINT AS hm_group_count,
-            (len(hm_groups) > 1) AS multiple_hm_groups
+            (len(hm_groups) > 1) AS multiple_hm_groups,
+            CAST(floor(NIS_STRATUM / 1000) AS UTINYINT) AS hospital_division_code,
+            CASE
+                WHEN floor(NIS_STRATUM / 1000) IN (1, 2) THEN 'Northeast'
+                WHEN floor(NIS_STRATUM / 1000) IN (3, 4) THEN 'Midwest'
+                WHEN floor(NIS_STRATUM / 1000) IN (5, 6, 7) THEN 'South'
+                WHEN floor(NIS_STRATUM / 1000) IN (8, 9) THEN 'West'
+                ELSE 'Unknown'
+            END AS hospital_region,
+            CASE CAST(floor(NIS_STRATUM / 100) % 10 AS INTEGER)
+                WHEN 0 THEN 'Government or private (collapsed)'
+                WHEN 1 THEN 'Government, nonfederal'
+                WHEN 2 THEN 'Private, not-for-profit'
+                WHEN 3 THEN 'Private, investor-owned'
+                WHEN 4 THEN 'Private, type collapsed'
+                ELSE 'Unknown'
+            END AS hospital_control,
+            CASE CAST(floor(NIS_STRATUM / 10) % 10 AS INTEGER)
+                WHEN 1 THEN 'Rural'
+                WHEN 2 THEN 'Urban nonteaching'
+                WHEN 3 THEN 'Urban teaching'
+                ELSE 'Unknown'
+            END AS hospital_location_teaching,
+            CASE CAST(NIS_STRATUM % 10 AS INTEGER)
+                WHEN 1 THEN 'Small'
+                WHEN 2 THEN 'Medium'
+                WHEN 3 THEN 'Large'
+                ELSE 'Unknown'
+            END AS hospital_bed_size
         FROM derived
         WHERE len(hm_groups) >= 1
         """,
@@ -259,9 +294,47 @@ def export_summaries(
         ORDER BY min(hm_group_count)
         """,
     )
+    hospital_dimensions = {
+        "hospital_by_region.csv": "hospital_region",
+        "hospital_by_division.csv": "hospital_division_code",
+        "hospital_by_location_teaching.csv": "hospital_location_teaching",
+        "hospital_by_bed_size.csv": "hospital_bed_size",
+        "hospital_by_control.csv": "hospital_control",
+    }
+    for filename, variable in hospital_dimensions.items():
+        rows = query_dicts(
+            connection,
+            f"""
+            SELECT
+                {variable},
+                count(*)::BIGINT AS unweighted_hm_discharges,
+                round(sum(DISCWT), 0)::DOUBLE AS weighted_hm_discharges_2016_2022,
+                round(100.0 * sum(DISCWT) / sum(sum(DISCWT)) OVER (), 2) AS weighted_percent
+            FROM hm_cohort
+            GROUP BY {variable}
+            ORDER BY weighted_hm_discharges_2016_2022 DESC
+            """,
+        )
+        write_csv(OUTPUT_DIR / filename, rows)
+    stratum_validation = query_dicts(
+        connection,
+        """
+        SELECT
+            count(*)::BIGINT AS unweighted_hm_discharges,
+            count(*) FILTER (
+                WHERE hospital_division_code NOT BETWEEN 1 AND 9
+                   OR hospital_region = 'Unknown'
+                   OR hospital_control = 'Unknown'
+                   OR hospital_location_teaching = 'Unknown'
+                   OR hospital_bed_size = 'Unknown'
+            )::BIGINT AS invalid_or_unknown_decodes
+        FROM hm_cohort
+        """,
+    )
     write_csv(OUTPUT_DIR / "cohort_by_year.csv", by_year)
     write_csv(OUTPUT_DIR / "cohort_by_subtype.csv", by_subtype)
     write_csv(OUTPUT_DIR / "cohort_overlap.csv", overlap)
+    write_csv(OUTPUT_DIR / "stratum_decode_validation.csv", stratum_validation)
     (OUTPUT_DIR / "cohort_summary.json").write_text(
         json.dumps(overall, indent=2) + "\n"
     )
