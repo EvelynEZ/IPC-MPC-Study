@@ -103,11 +103,6 @@ def audit_rows(columns: list[str]) -> list[dict[str, str]]:
         row("Adult cohort", "AGE" in column_set, "Requires AGE"),
         row("Discharge weights", "DISCWT" in column_set, "Requires DISCWT"),
         row("Survey strata", "NIS_STRATUM" in column_set, "Requires NIS_STRATUM"),
-        row(
-            "Hospital cluster",
-            "HOSP_NIS" in column_set,
-            "Required for final survey variance estimation; not derivable from NIS_STRATUM",
-        ),
         row("Mortality", "DIED" in column_set, "Requires DIED"),
         row("Length of stay", "LOS" in column_set, "Requires LOS"),
     ]
