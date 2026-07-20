@@ -168,6 +168,11 @@ def main() -> dict[str, Any]:
     annual_rows: list[dict[str, Any]] = []
     years = frame["year"].to_numpy(dtype=int)
     for year in sorted(frame["year"].unique()):
+        year_domain = years == year
+        annual_contrast = comparison(
+            weights_array[year_domain], outcome[year_domain], strata[year_domain],
+            exposure[year_domain],
+        )
         for status, label in [
             (False, "No documented sepsis"),
             (True, "Documented sepsis"),
@@ -184,6 +189,7 @@ def main() -> dict[str, Any]:
                 "weighted_palliative_care_percent": round(100 * result["estimate"], 2),
                 "ci_95_lower_percent": round(100 * result["ci_lower"], 2),
                 "ci_95_upper_percent": round(100 * result["ci_upper"], 2),
+                "sepsis_vs_no_sepsis_p_value": format_p(annual_contrast["difference_p"]),
             })
     write_csv(OUTPUT_DIR / "annual_palliative_care_by_sepsis.csv", annual_rows)
     summary = {
