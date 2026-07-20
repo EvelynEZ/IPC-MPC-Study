@@ -96,3 +96,30 @@ Hospital characteristics were decoded from `NIS_STRATUM`.
 | 2020 | 13.99% | 15.01% | 1.03 | 0.029 |
 | 2021 | 14.11% | 14.75% | 0.65 | 0.018 |
 | 2022 | 12.53% | 12.99% | 0.45 | 0.014 |
+
+---
+
+# Co-documented Complications by Sepsis Status
+
+The following table compares adult hematologic-malignancy inpatient discharges with documented sepsis (`A41*`) against discharges without `A41*`. Conditions are identified in any diagnosis position. They are co-documented during the same hospitalization; diagnosis fields do not establish whether a condition preceded or followed sepsis. Categories can overlap and should not be summed.
+
+| Complication | No sepsis, unweighted n | No sepsis, weighted n (%) | Sepsis, unweighted n | Sepsis, weighted n (%) | Difference, pp | Prevalence ratio |
+|---|---:|---:|---:|---:|---:|---:|
+| Severe sepsis with septic shock | 2,134 | 10,670 (0.26%) | 41,137 | 205,685 (25.97%) | 25.71 | 101.80 |
+| Severe sepsis, with or without shock | 3,692 | 18,460 (0.44%) | 67,538 | 337,690 (42.63%) | 42.19 | 96.60 |
+| Acute respiratory failure | 72,064 | 360,320 (8.61%) | 47,094 | 235,470 (29.73%) | 21.11 | 3.45 |
+| Respiratory failure, unspecified | 5,289 | 26,445 (0.63%) | 2,797 | 13,985 (1.77%) | 1.13 | 2.79 |
+| Acute kidney injury | 184,124 | 920,620 (22.01%) | 70,212 | 351,060 (44.32%) | 22.31 | 2.01 |
+| Pneumonia | 102,930 | 514,650 (12.30%) | 63,040 | 315,200 (39.79%) | 27.49 | 3.23 |
+| Pulmonary embolism | 15,824 | 79,120 (1.89%) | 3,395 | 16,975 (2.14%) | 0.25 | 1.13 |
+| Acute lower-extremity DVT | 7,160 | 35,800 (0.86%) | 1,695 | 8,475 (1.07%) | 0.21 | 1.25 |
+| Tumor lysis syndrome | 11,841 | 59,205 (1.42%) | 3,942 | 19,710 (2.49%) | 1.07 | 1.76 |
+| Disseminated intravascular coagulation | 3,795 | 18,975 (0.45%) | 3,072 | 15,360 (1.94%) | 1.49 | 4.27 |
+| Paroxysmal tachycardia/SVT/VT | 26,985 | 134,925 (3.23%) | 9,832 | 49,160 (6.21%) | 2.98 | 1.92 |
+| Atrial fibrillation/flutter, excluding chronic AF | 145,281 | 726,405 (17.37%) | 34,061 | 170,305 (21.50%) | 4.13 | 1.24 |
+| Other cardiac arrhythmias | 20,641 | 103,205 (2.47%) | 3,723 | 18,615 (2.35%) | −0.12 | 0.95 |
+| Any specified cardiac arrhythmia | 172,215 | 861,075 (20.59%) | 41,803 | 209,015 (26.39%) | 5.80 | 1.28 |
+
+## Interpretation
+
+The largest absolute prevalence differences were observed for severe sepsis with or without shock (42.19 percentage points), pneumonia (27.49 points), septic shock (25.71 points), acute kidney injury (22.31 points), and acute respiratory failure (21.11 points). The presence of `R65.2*` codes in a small portion of the no-`A41*` cohort shows that the current narrow sepsis exposure does not capture every hospitalization carrying a severe-sepsis code, potentially because other underlying sepsis code families are not included. This should be addressed when the sepsis phenotype is finalized.

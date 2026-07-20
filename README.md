@@ -52,6 +52,10 @@ For a no-terminal workflow on macOS, double-click `launch_phase_1_2.command` in 
 
 Double-click `launch_phase_3.command` to open the executed baseline-characteristics notebook. It compares HM discharges with versus without documented sepsis and includes weighted Table 1, missingness review, standardized differences, and copy/paste report text.
 
+## Complication analysis
+
+Double-click `launch_phase_4.command` to open the executed complication-comparison notebook. It reports weighted counts and prevalence for the protocol-specified co-documented complications in HM discharges with versus without documented sepsis.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.
