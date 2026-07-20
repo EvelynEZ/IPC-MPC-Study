@@ -1,12 +1,24 @@
-f nsk,dvytiy
+# Differential Association of Sepsis With Inpatient Palliative-Care Utilization Across Hematologic-Malignancy Subtypes
 
-# Phase 3: Baseline Characteristics by Documented Sepsis Status
+## A National Inpatient Sample Analysis, 2016–2022
+
+**Primary research question:** Among adult hospitalizations involving hematologic malignancies, is documented sepsis associated with greater documented inpatient palliative-care use, and does this association differ across hematologic-malignancy subtypes?
+
+**Study population:** Adult inpatient discharges involving hematologic malignancy in the 2016–2022 National Inpatient Sample.
+
+**Primary exposure:** Documented sepsis (`A41*`).
+
+**Primary outcome:** Documented inpatient palliative-care use (`Z51.5`).
+
+---
+
+## Phase 3: Baseline Characteristics by Documented Sepsis Status
 
 All values are weighted percentages unless otherwise stated. Counts represent inpatient discharges, not unique patients. Documented sepsis is defined using `A41*` in any diagnosis position.
 
 ## Cohort size
 
-| Sepsis status | Unweighted n | Weighted n, 2016–2022 |
+| Sepsihhhhs status | Unweighted n | Weighted n, 2016–2022 |
 |---|---:|---:|
 | No documented sepsis | 836,571 | 4,182,853 |
 | Documented sepsis (`A41*`) | 158,421 | 792,105 |
