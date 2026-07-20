@@ -56,6 +56,10 @@ Double-click `launch_phase_3.command` to open the executed baseline-characterist
 
 Double-click `launch_phase_4.command` to open the executed complication-comparison notebook. It reports weighted counts and prevalence for the protocol-specified co-documented complications in HM discharges with versus without documented sepsis.
 
+## CCI, length of stay, and mortality
+
+Double-click `launch_phase_5.command` to open the executed clinical-outcomes notebook. It compares the cancer-excluded Charlson Comorbidity Index, length of stay, and in-hospital mortality between HM discharges with and without documented sepsis.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.

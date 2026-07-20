@@ -120,3 +120,22 @@ The following table compares adult hematologic-malignancy inpatient discharges w
 The largest absolute prevalence differences were observed for severe sepsis with or without shock (42.19 percentage points), pneumonia (27.49 points), septic shock (25.71 points), acute kidney injury (22.31 points), and acute respiratory failure (21.11 points). The presence of `R65.2*` codes in a small portion of the no-`A41*` cohort shows that the current narrow sepsis exposure does not capture every hospitalization carrying a severe-sepsis code, potentially because other underlying sepsis code families are not included. This should be addressed when the sepsis phenotype is finalized.
 
 All displayed comparisons were statistically significant after Benjamini–Hochberg false-discovery-rate adjustment. These p-values are approximate two-sided two-proportion tests based on unweighted sampled discharge counts. They do not account for hospital clustering or the full NIS survey design. Statistical significance should be interpreted alongside the absolute difference; for example, other cardiac arrhythmias had an adjusted p-value of 0.006 but only a −0.12 percentage-point difference.
+
+---
+
+# Comorbidity Burden, Length of Stay, and In-Hospital Mortality
+
+The Charlson Comorbidity Index (CCI) uses the Quan ICD-10 mapping and original Charlson weights. Cancer and metastatic-cancer components were excluded, no age points were added, and the standard diabetes and liver-disease hierarchy was applied. Means, standard deviations, counts, and percentages use `DISCWT`. Mortality percentages exclude missing `DIED` values.
+
+| Outcome | Level | No sepsis | Sepsis | P-value | Test |
+|---|---|---:|---:|---:|---|
+| Charlson Comorbidity Index excluding cancer | Mean (SD) | 1.84 (1.90) | 2.09 (1.92) | <0.001 | Welch t-test |
+| Charlson category | 0 (reference) | 1,319,600 (31.55%) | 190,300 (24.02%) | <0.001 | Pearson chi-square |
+|  | 1–2 | 1,616,779 (38.65%) | 327,450 (41.34%) |  |  |
+|  | ≥3 | 1,246,475 (29.80%) | 274,355 (34.64%) |  |  |
+| Length of stay, days | Mean (SD) | 6.88 (8.20) | 11.13 (13.45) | <0.001 | Welch t-test |
+| In-hospital mortality | Died | 132,635 (3.17%) | 136,050 (17.18%) | <0.001 | Pearson chi-square |
+
+There were 17 missing LOS values in the no-sepsis cohort and 7 in the sepsis cohort. `DIED` was missing for 375 no-sepsis and 66 sepsis discharges. P-values use sampled discharge records and do not account for hospital clustering. These are unadjusted descriptive comparisons and do not establish causality.
+
+HM discharges with documented sepsis had a higher mean cancer-excluded CCI, longer mean hospital stay, and higher in-hospital mortality than HM discharges without documented sepsis. All three overall comparisons had p<0.001.
