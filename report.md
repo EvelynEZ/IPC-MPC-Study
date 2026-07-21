@@ -259,7 +259,7 @@ Counts and prevalence estimates use `DISCWT`. Confidence intervals and overall t
 
 ---
 
-# Primary Adjusted Analysis
+# Commands 16 and 16B: Primary Adjusted Analysis
 
 A `DISCWT`-weighted logistic-regression model examined the association between documented sepsis (`A41*`) and documented inpatient palliative-care use (`Z51.5` in any diagnosis position). The model adjusted for continuous age, sex, race/ethnicity, primary payer, median household-income quartile, cancer-excluded Charlson category, hospital region, hospital location/teaching status, hospital bed size, admission year, and mutually exclusive HM subtype. All 994,992 sampled HM hospitalizations were included.
 
