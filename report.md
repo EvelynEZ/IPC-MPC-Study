@@ -68,19 +68,21 @@ Hospital characteristics were decoded from `NIS_STRATUM`. P-values are shown onc
 
 ## Hematologic-malignancy subtype
 
-| HM subtype | No sepsis | Sepsis | Difference, pp | SMD |
-|---|---:|---:|---:|---:|
-| Lymphoma | 30.93% | 26.98% | −3.94 | −0.087 |
-| AML | 7.60% | 9.99% | 2.39 | 0.084 |
-| CML | 2.77% | 2.14% | −0.63 | −0.040 |
-| CLL/chronic leukemia | 10.91% | 11.11% | 0.20 | 0.006 |
-| ALL/unspecified acute leukemia | 3.32% | 2.74% | −0.58 | −0.034 |
-| Other leukemia | 1.95% | 2.32% | 0.37 | 0.026 |
-| Myeloma/plasma-cell neoplasm | 15.29% | 13.95% | −1.35 | −0.038 |
-| MDS | 10.71% | 10.57% | −0.14 | −0.004 |
-| MPN | 16.52% | 20.20% | 3.67 | 0.095 |
+| HM subtype | No sepsis | Sepsis | Difference, pp | SMD | P-value |
+|---|---:|---:|---:|---:|---:|
+| Lymphoma | 30.93% | 26.98% | −3.94 | −0.087 | <0.001 |
+| AML | 7.60% | 9.99% | 2.39 | 0.084 |  |
+| CML | 2.77% | 2.14% | −0.63 | −0.040 |  |
+| CLL/chronic leukemia | 10.91% | 11.11% | 0.20 | 0.006 |  |
+| ALL/unspecified acute leukemia | 3.32% | 2.74% | −0.58 | −0.034 |  |
+| Other leukemia | 1.95% | 2.32% | 0.37 | 0.026 |  |
+| Myeloma/plasma-cell neoplasm | 15.29% | 13.95% | −1.35 | −0.038 |  |
+| MDS | 10.71% | 10.57% | −0.14 | −0.004 |  |
+| MPN | 16.52% | 20.20% | 3.67 | 0.095 |  |
 
 **Legend — subtype assignment:** HM subtype categories are mutually exclusive, so each hospitalization appears in exactly one row. All qualifying HM subtype diagnoses were first identified across the diagnosis fields. Hospitalizations with one subtype were assigned that subtype. When multiple subtype groups were present, the first qualifying HM diagnosis in diagnosis-field order determined the displayed subtype; these hospitalizations remain separately flagged as `multiple_hm_groups=1` for sensitivity analysis. The assigned category therefore represents the first-listed HM subtype and not necessarily the biologically dominant malignancy.
+
+**P-value:** The value shown once on the first row is the overall Pearson chi-square p-value comparing the complete HM-subtype distribution between the sepsis and no-sepsis cohorts. It is not a lymphoma-specific p-value.
 
 ## Admission year
 
