@@ -74,3 +74,7 @@ Double-click `launch_phase_7.command` to open the executed Command 15 notebook. 
 - Do not commit `.env`, Parquet files, DuckDB databases, or generated outputs.
 - Keep derived results aggregate and de-identified; review small cell counts before sharing.
 - Put reusable analysis code under `src/`, tests under `tests/`, and exploratory notebooks under `notebooks/`.
+
+## Table-output convention
+
+Every report-facing table ends with a clearly labeled total or cohort-denominator row. Only mathematically additive quantities are summed: mutually exclusive counts are totaled and exhaustive category percentages may show 100%. Means, SDs, confidence limits, differences, ratios, SMDs, and p-values are not summed and are displayed as `—`. Tables of overlapping diagnoses use the cohort denominator rather than a misleading sum of condition counts.

@@ -22,6 +22,7 @@ All values are weighted percentages unless otherwise stated. Counts represent in
 |---|---:|---:|
 | No documented sepsis | 836,571 | 4,182,853 |
 | Documented sepsis (`A41*`) | 158,421 | 792,105 |
+| **Total** | **994,992** | **4,974,958** |
 
 ## Demographic, socioeconomic, and hospital characteristics
 
@@ -65,6 +66,7 @@ Hospital characteristics were decoded from `NIS_STRATUM`. P-values are shown onc
 | Ownership | Government, nonfederal | 13.08% | 11.09% | −1.99 | −0.061 | <0.001 |
 |  | Private, not-for-profit | 76.88% | 77.32% | 0.44 | 0.010 |  |
 |  | Private, investor-owned | 10.04% | 11.59% | 1.55 | 0.050 |  |
+| **Total cohort denominator** |  | **4,182,853** | **792,105** | — | — | — |
 
 ## Hematologic-malignancy subtype
 
@@ -79,6 +81,7 @@ Hospital characteristics were decoded from `NIS_STRATUM`. P-values are shown onc
 | Myeloma/plasma-cell neoplasm | 15.29% | 13.95% | −1.35 | −0.038 |  |
 | MDS | 10.71% | 10.57% | −0.14 | −0.004 |  |
 | MPN | 16.52% | 20.20% | 3.67 | 0.095 |  |
+| **Total** | **100.00%** | **100.00%** | **0.00** | — | — |
 
 **Legend — subtype assignment:** HM subtype categories are mutually exclusive, so each hospitalization appears in exactly one row. All qualifying HM subtype diagnoses were first identified across the diagnosis fields. Hospitalizations with one subtype were assigned that subtype. When multiple subtype groups were present, the first qualifying HM diagnosis in diagnosis-field order determined the displayed subtype; these hospitalizations remain separately flagged as `multiple_hm_groups=1` for sensitivity analysis. The assigned category therefore represents the first-listed HM subtype and not necessarily the biologically dominant malignancy.
 
@@ -95,6 +98,7 @@ Hospital characteristics were decoded from `NIS_STRATUM`. P-values are shown onc
 | 2020 | 13.99% | 15.01% | 1.03 | 0.029 |
 | 2021 | 14.11% | 14.75% | 0.65 | 0.018 |
 | 2022 | 12.53% | 12.99% | 0.45 | 0.014 |
+| **Total** | **100.00%** | **100.00%** | **0.00** | — |
 
 ---
 
@@ -118,6 +122,7 @@ The following table compares adult hematologic-malignancy inpatient discharges w
 | Atrial fibrillation/flutter, excluding chronic AF | 145,281 | 726,405 (17.37%) | 34,061 | 170,305 (21.50%) | 4.13 | 1.24 | <0.001 | <0.001 |
 | Other cardiac arrhythmias | 20,641 | 103,205 (2.47%) | 3,723 | 18,615 (2.35%) | −0.12 | 0.95 | 0.006 | 0.006 |
 | Any specified cardiac arrhythmia | 172,215 | 861,075 (20.59%) | 41,803 | 209,015 (26.39%) | 5.80 | 1.28 | <0.001 | <0.001 |
+| **Total cohort denominator** | **836,571** | **4,182,853 (100.00%)** | **158,421** | **792,105 (100.00%)** | — | — | — | — |
 
 ## Interpretation
 
@@ -139,6 +144,7 @@ The Charlson Comorbidity Index (CCI) uses the Quan ICD-10 mapping and original C
 |  | ≥3 | 1,246,475 (29.80%) | 274,355 (34.64%) |  |  |
 | Length of stay, days | Mean (SD) | 6.88 (8.20) | 11.13 (13.45) | <0.001 | Welch t-test |
 | In-hospital mortality | Died | 132,635 (3.17%) | 136,050 (17.18%) | <0.001 | Pearson chi-square |
+| **Total cohort denominator** |  | **4,182,853 (100.00%)** | **792,105 (100.00%)** | — | — |
 
 There were 17 missing LOS values in the no-sepsis cohort and 7 in the sepsis cohort. `DIED` was missing for 375 no-sepsis and 66 sepsis discharges. P-values use sampled discharge records and do not account for hospital clustering. These are unadjusted descriptive comparisons and do not establish causality.
 
@@ -156,6 +162,7 @@ This separate table reports the actual sampled NIS discharge records without app
 |  | ≥3 | 249,295 (29.80%) | 54,871 (34.64%) |  |  |
 | Length of stay, days | Mean (SD) | 6.88 (8.20) | 11.13 (13.45) | <0.001 | Welch t-test |
 | In-hospital mortality | Died | 26,527 (3.17%) | 27,210 (17.18%) | <0.001 | Pearson chi-square |
+| **Total cohort denominator** |  | **836,571 (100.00%)** | **158,421 (100.00%)** | — | — |
 
 ---
 
@@ -170,11 +177,13 @@ Documented inpatient palliative-care use was defined as normalized ICD-10-CM `Z5
 | All adult HM hospitalizations | 994,992 | 80,733 | 4,974,958 | 403,665 | 8.11% (8.06%–8.17%) |
 | HM without documented sepsis | 836,571 | 54,772 | 4,182,853 | 273,860 | 6.55% (6.49%–6.60%) |
 | HM with documented sepsis | 158,421 | 25,961 | 792,105 | 129,805 | 16.39% (16.21%–16.57%) |
+| **Total unique HM cohort** | **994,992** | **80,733** | **4,974,958** | **403,665** | **8.11% (8.06%–8.17%)** |
 
 | Comparison | Estimate | 95% CI | P-value |
 |---|---:|---:|---:|
 | Absolute prevalence difference, sepsis minus no sepsis | 9.84 percentage points | 9.65 to 10.03 | <0.001 |
 | Crude weighted odds ratio, sepsis vs no sepsis | 2.798 | 2.753 to 2.842 | <0.001 |
+| **Total** | — | — | — |
 
 The estimates use `DISCWT`. Confidence intervals and p-values account for year-specific `NIS_STRATUM` through Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, sampled discharges were treated as variance units. Consequently, these are strata-adjusted approximations rather than full NIS survey-design variance estimates. The association is unadjusted and does not establish causality. Covariate-adjusted probabilities will be estimated later in Command 16B.
 
@@ -191,6 +200,7 @@ Values are weighted percentages of hospitalizations with documented inpatient pa
 | 2020 | 6.85% (6.71%–7.00%) | 17.04% (16.56%–17.52%) | <0.001 |
 | 2021 | 7.46% (7.31%–7.61%) | 18.48% (17.99%–18.98%) | <0.001 |
 | 2022 | 8.06% (7.89%–8.22%) | 19.34% (18.81%–19.89%) | <0.001 |
+| **Total, 2016–2022** | **6.55% (6.49%–6.60%)** | **16.39% (16.21%–16.57%)** | **<0.001** |
 
 Each p-value compares documented inpatient palliative-care prevalence between the sepsis and no-sepsis cohorts within that year. It is not a test of the annual trend or a year-by-sepsis interaction.
 
@@ -213,6 +223,7 @@ HM subtype categories are mutually exclusive and use the first qualifying HM dia
 | Myeloma/plasma-cell neoplasm | 150,044 | 13,580 | 750,220 | 67,900 | 9.05% (8.91%–9.20%) |  |
 | MDS | 106,324 | 9,809 | 531,620 | 49,045 | 9.23% (9.05%–9.40%) |  |
 | MPN | 170,226 | 8,606 | 851,130 | 43,030 | 5.06% (4.95%–5.16%) |  |
+| **Total** | **994,992** | **80,733** | **4,974,958** | **403,665** | **8.11% (8.06%–8.17%)** | **<0.001** |
 
 ## HM Hospitalizations Without Documented Sepsis
 
@@ -227,6 +238,7 @@ HM subtype categories are mutually exclusive and use the first qualifying HM dia
 | Myeloma/plasma-cell neoplasm | 127,948 | 9,821 | 639,740 | 49,105 | 7.68% (7.53%–7.82%) |  |
 | MDS | 89,579 | 6,798 | 447,895 | 33,990 | 7.59% (7.42%–7.76%) |  |
 | MPN | 138,231 | 5,631 | 691,155 | 28,155 | 4.07% (3.97%–4.18%) |  |
+| **Total** | **836,571** | **54,772** | **4,182,853** | **273,860** | **6.55% (6.49%–6.60%)** | **<0.001** |
 
 ## HM Hospitalizations With Documented Sepsis
 
@@ -241,5 +253,6 @@ HM subtype categories are mutually exclusive and use the first qualifying HM dia
 | Myeloma/plasma-cell neoplasm | 22,096 | 3,759 | 110,480 | 18,795 | 17.01% (16.52%–17.51%) |  |
 | MDS | 16,745 | 3,011 | 83,725 | 15,055 | 17.98% (17.41%–18.57%) |  |
 | MPN | 31,995 | 2,975 | 159,975 | 14,875 | 9.30% (8.99%–9.62%) |  |
+| **Total** | **158,421** | **25,961** | **792,105** | **129,805** | **16.39% (16.21%–16.57%)** | **<0.001** |
 
 Counts and prevalence estimates use `DISCWT`. Confidence intervals and overall tests use year-specific `NIS_STRATUM` with Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, sampled discharges are treated as variance units; inference is therefore a strata-adjusted approximation rather than full NIS survey inference.
