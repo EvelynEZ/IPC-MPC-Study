@@ -64,6 +64,10 @@ Double-click `launch_phase_5.command` to open the executed clinical-outcomes not
 
 Double-click `launch_phase_6.command` to open the executed Task 12A–B notebook. It reports documented inpatient palliative-care use overall and by sepsis status, including weighted prevalence, confidence intervals, an absolute difference, and a crude weighted odds ratio.
 
+## Palliative-care utilization by HM subtype
+
+Double-click `launch_phase_7.command` to open the executed Command 15 notebook. It reports documented inpatient palliative-care use across mutually exclusive HM subtypes overall and separately for hospitalizations with and without documented sepsis.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.

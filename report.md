@@ -193,3 +193,53 @@ Values are weighted percentages of hospitalizations with documented inpatient pa
 | 2022 | 8.06% (7.89%–8.22%) | 19.34% (18.81%–19.89%) | <0.001 |
 
 Each p-value compares documented inpatient palliative-care prevalence between the sepsis and no-sepsis cohorts within that year. It is not a test of the annual trend or a year-by-sepsis interaction.
+
+---
+
+# Documented Inpatient Palliative-Care Use by Mutually Exclusive HM Subtype
+
+HM subtype categories are mutually exclusive and use the first qualifying HM diagnosis in diagnosis-field order when multiple subtype groups are present. The p-value shown once in each table is the overall Wald test comparing documented inpatient palliative-care prevalence across all nine subtypes; it is not a lymphoma-specific test.
+
+## All Adult HM Hospitalizations
+
+| HM subtype | Unweighted sample n | Unweighted palliative-care n | Weighted hospitalizations | Weighted palliative-care n | Weighted % (95% CI) | Overall p-value |
+|---|---:|---:|---:|---:|---:|---:|
+| Lymphoma | 301,494 | 23,491 | 1,507,470 | 117,455 | 7.79% (7.70%–7.89%) | <0.001 |
+| AML | 79,382 | 10,984 | 396,910 | 54,920 | 13.84% (13.60%–14.08%) |  |
+| CML | 26,540 | 1,760 | 132,700 | 8,800 | 6.63% (6.34%–6.94%) |  |
+| CLL/chronic leukemia | 108,837 | 8,272 | 544,185 | 41,360 | 7.60% (7.44%–7.76%) |  |
+| ALL/unspecified acute leukemia | 32,145 | 2,200 | 160,725 | 11,000 | 6.84% (6.57%–7.13%) |  |
+| Other leukemia | 20,000 | 2,031 | 100,000 | 10,155 | 10.16% (9.74%–10.58%) |  |
+| Myeloma/plasma-cell neoplasm | 150,044 | 13,580 | 750,220 | 67,900 | 9.05% (8.91%–9.20%) |  |
+| MDS | 106,324 | 9,809 | 531,620 | 49,045 | 9.23% (9.05%–9.40%) |  |
+| MPN | 170,226 | 8,606 | 851,130 | 43,030 | 5.06% (4.95%–5.16%) |  |
+
+## HM Hospitalizations Without Documented Sepsis
+
+| HM subtype | Unweighted sample n | Unweighted palliative-care n | Weighted hospitalizations | Weighted palliative-care n | Weighted % (95% CI) | Overall p-value |
+|---|---:|---:|---:|---:|---:|---:|
+| Lymphoma | 258,745 | 15,851 | 1,293,725 | 79,255 | 6.13% (6.03%–6.22%) | <0.001 |
+| AML | 63,562 | 7,137 | 317,810 | 35,685 | 11.23% (10.99%–11.48%) |  |
+| CML | 23,147 | 1,215 | 115,735 | 6,075 | 5.25% (4.97%–5.54%) |  |
+| CLL/chronic leukemia | 91,242 | 5,459 | 456,210 | 27,295 | 5.98% (5.83%–6.14%) |  |
+| ALL/unspecified acute leukemia | 27,797 | 1,517 | 138,985 | 7,585 | 5.46% (5.20%–5.73%) |  |
+| Other leukemia | 16,320 | 1,343 | 81,600 | 6,715 | 8.23% (7.82%–8.66%) |  |
+| Myeloma/plasma-cell neoplasm | 127,948 | 9,821 | 639,740 | 49,105 | 7.68% (7.53%–7.82%) |  |
+| MDS | 89,579 | 6,798 | 447,895 | 33,990 | 7.59% (7.42%–7.76%) |  |
+| MPN | 138,231 | 5,631 | 691,155 | 28,155 | 4.07% (3.97%–4.18%) |  |
+
+## HM Hospitalizations With Documented Sepsis
+
+| HM subtype | Unweighted sample n | Unweighted palliative-care n | Weighted hospitalizations | Weighted palliative-care n | Weighted % (95% CI) | Overall p-value |
+|---|---:|---:|---:|---:|---:|---:|
+| Lymphoma | 42,749 | 7,640 | 213,745 | 38,200 | 17.87% (17.51%–18.24%) | <0.001 |
+| AML | 15,820 | 3,847 | 79,100 | 19,235 | 24.32% (23.66%–24.99%) |  |
+| CML | 3,393 | 545 | 16,965 | 2,725 | 16.06% (14.87%–17.34%) |  |
+| CLL/chronic leukemia | 17,595 | 2,813 | 87,975 | 14,065 | 15.99% (15.45%–16.54%) |  |
+| ALL/unspecified acute leukemia | 4,348 | 683 | 21,740 | 3,415 | 15.71% (14.66%–16.82%) |  |
+| Other leukemia | 3,680 | 688 | 18,400 | 3,440 | 18.70% (17.47%–19.99%) |  |
+| Myeloma/plasma-cell neoplasm | 22,096 | 3,759 | 110,480 | 18,795 | 17.01% (16.52%–17.51%) |  |
+| MDS | 16,745 | 3,011 | 83,725 | 15,055 | 17.98% (17.41%–18.57%) |  |
+| MPN | 31,995 | 2,975 | 159,975 | 14,875 | 9.30% (8.99%–9.62%) |  |
+
+Counts and prevalence estimates use `DISCWT`. Confidence intervals and overall tests use year-specific `NIS_STRATUM` with Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, sampled discharges are treated as variance units; inference is therefore a strata-adjusted approximation rather than full NIS survey inference.
