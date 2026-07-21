@@ -282,3 +282,37 @@ Probabilities are average marginal predictions standardized over the observed we
 After covariate adjustment, documented sepsis was associated with approximately 2.80-fold higher odds of documented inpatient palliative-care use and a 9.46-percentage-point higher adjusted probability. This observational association does not establish causality.
 
 Variance estimation used year-specific `NIS_STRATUM` with discharge-level Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, confidence intervals and p-values are strata-adjusted approximations rather than full NIS hospital-cluster-adjusted estimates.
+
+---
+
+# Commands 17A and 17B: Sepsis-by-HM-Subtype Interaction
+
+The adjusted logistic model included documented sepsis, mutually exclusive HM subtype, and all sepsis-by-subtype interaction terms, with adjustment for continuous age, sex, race/ethnicity, payer, income quartile, cancer-excluded Charlson category, hospital region, hospital location/teaching status, hospital bed size, and admission year. All 994,992 sampled HM hospitalizations were included.
+
+## Joint Interaction Test
+
+| Measure | Wald chi-square | Degrees of freedom | P-value |
+|---|---:|---:|---:|
+| Sepsis × HM subtype interaction | 181.245 | 8 | <0.001 |
+| **Total** | — | — | — |
+
+The significant joint interaction indicates that the adjusted association between documented sepsis and documented inpatient palliative-care use differs across HM subtypes.
+
+## Subtype-Specific Adjusted Estimates
+
+| HM subtype | Adjusted probability without sepsis | Adjusted probability with sepsis | Adjusted difference, pp (95% CI) | Subtype p-value | Overall interaction p-value |
+|---|---:|---:|---:|---:|---:|
+| Lymphoma | 6.53% | 17.86% | 11.33 (10.96–11.70) | <0.001 | <0.001 |
+| AML | 12.53% | 25.59% | 13.05 (12.32–13.78) | <0.001 |  |
+| CML | 5.41% | 15.56% | 10.14 (8.92–11.37) | <0.001 |  |
+| CLL/chronic leukemia | 4.95% | 13.19% | 8.24 (7.76–8.71) | <0.001 |  |
+| ALL/unspecified acute leukemia | 8.79% | 22.31% | 13.52 (12.05–14.99) | <0.001 |  |
+| Other leukemia | 7.76% | 17.31% | 9.55 (8.31–10.79) | <0.001 |  |
+| Myeloma/plasma-cell neoplasm | 7.31% | 15.97% | 8.66 (8.18–9.15) | <0.001 |  |
+| MDS | 6.03% | 14.75% | 8.72 (8.21–9.23) | <0.001 |  |
+| MPN | 4.66% | 10.84% | 6.19 (5.81–6.56) | <0.001 |  |
+| **Total** | — | — | — | — | **<0.001** |
+
+Adjusted probabilities are average marginal predictions standardized over the observed weighted distribution of all other covariates. Sepsis was associated with a positive adjusted difference in every subtype, ranging from 6.19 percentage points for MPN to 13.52 percentage points for ALL/unspecified acute leukemia. These observational associations do not establish causality.
+
+Variance estimation used year-specific `NIS_STRATUM` with discharge-level Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, confidence intervals and p-values are strata-adjusted approximations rather than full NIS hospital-cluster-adjusted estimates.

@@ -72,6 +72,10 @@ Double-click `launch_phase_7.command` to open the executed Command 15 notebook. 
 
 Double-click `launch_phase_8.command` to open the executed Commands 16 and 16B notebook. It reports the adjusted association between documented sepsis and documented inpatient palliative-care use, including the adjusted odds ratio, standardized probabilities, and adjusted absolute difference.
 
+## Sepsis-by-HM-subtype interaction
+
+Double-click `launch_phase_9.command` to open the executed Commands 17A and 17B notebook. It reports the joint interaction test and subtype-specific adjusted probabilities and absolute differences.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.
