@@ -337,6 +337,71 @@ Estimates use `DISCWT` and year-specific `NIS_STRATUM`. Because `HOSP_NIS` is un
 
 ---
 
+# Commands 20A–20C: Annual Trends in Documented Palliative-Care Use
+
+EAPCs were estimated using `DISCWT`-weighted modified-Poisson models with a continuous year term. EAPC is `100 × (exp(year coefficient) − 1)`.
+
+## Command 20A: Overall Trend
+
+| Year | Weighted palliative-care % (95% CI) |
+|---:|---:|
+| 2016 | 6.75% (6.63%–6.89%) |
+| 2017 | 7.26% (7.13%–7.40%) |
+| 2018 | 7.60% (7.46%–7.73%) |
+| 2019 | 7.72% (7.59%–7.86%) |
+| 2020 | 8.57% (8.43%–8.72%) |
+| 2021 | 9.28% (9.13%–9.43%) |
+| 2022 | 9.91% (9.74%–10.07%) |
+| **Total, 2016–2022** | **8.11% (8.06%–8.17%)** |
+
+The overall EAPC was **6.54% per year** (95% CI, 6.18%–6.91%; p<0.001).
+
+## Command 20B: Trends by Sepsis Status
+
+| Cohort | EAPC | 95% CI | Trend p-value | Year × sepsis p-value |
+|---|---:|---:|---:|---:|
+| No documented sepsis | 6.41% | 5.97%–6.85% | <0.001 | 0.039 |
+| Documented sepsis | 5.62% | 5.02%–6.23% | <0.001 |  |
+| **Total** | — | — | — | **0.039** |
+
+Documented palliative-care utilization increased significantly in both cohorts, but the annual trends differed modestly by sepsis status (interaction p=0.039).
+
+## Command 20C: Trends Among Sepsis Admissions by HM Subtype
+
+No subtype-year cells had 10 or fewer unweighted palliative-care events; therefore, no estimates were suppressed.
+
+| HM subtype | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Lymphoma | 15.56% | 15.67% | 17.35% | 17.20% | 19.55% | 20.11% | 19.07% |
+| AML | 22.98% | 22.92% | 25.43% | 23.53% | 24.45% | 25.36% | 25.37% |
+| CML | 12.90% | 16.10% | 17.11% | 15.61% | 14.42% | 16.67% | 18.72% |
+| CLL/chronic leukemia | 13.21% | 13.70% | 14.48% | 14.41% | 17.83% | 19.08% | 17.71% |
+| ALL/unspecified acute leukemia | 12.31% | 17.34% | 14.11% | 17.53% | 16.87% | 17.02% | 14.43% |
+| Other leukemia | 17.40% | 18.01% | 18.20% | 17.88% | 20.46% | 19.18% | 19.44% |
+| Myeloma/plasma-cell neoplasm | 14.75% | 15.13% | 15.07% | 16.43% | 18.18% | 19.99% | 19.23% |
+| MDS | 14.52% | 17.17% | 18.71% | 17.66% | 17.93% | 21.20% | 18.87% |
+| MPN | 8.40% | 8.04% | 8.72% | 8.29% | 9.77% | 10.81% | 17.24% |
+| **Total sepsis cohort** | **13.94%** | **14.75%** | **15.67%** | **15.55%** | **17.04%** | **18.48%** | **19.34%** |
+
+| HM subtype | EAPC | 95% CI | Trend p-value | Overall year × subtype p-value |
+|---|---:|---:|---:|---:|
+| Lymphoma | 4.37% | 3.32%–5.44% | <0.001 | <0.001 |
+| AML | 1.62% | 0.21%–3.05% | 0.024 |  |
+| CML | 3.63% | −0.29%–7.72% | 0.070 |  |
+| CLL/chronic leukemia | 6.43% | 4.62%–8.27% | <0.001 |  |
+| ALL/unspecified acute leukemia | 1.80% | −1.61%–5.33% | 0.304 |  |
+| Other leukemia | 2.05% | −1.40%–5.62% | 0.248 |  |
+| Myeloma/plasma-cell neoplasm | 5.73% | 4.17%–7.32% | <0.001 |  |
+| MDS | 4.09% | 2.42%–5.79% | <0.001 |  |
+| MPN | 7.94% | 5.81%–10.11% | <0.001 |  |
+| **Total** | — | — | — | **<0.001** |
+
+The year-by-subtype interaction was significant (Wald χ²=36.704, 8 df; p<0.001), indicating that annual trends differed across HM subtypes among sepsis hospitalizations.
+
+Variance estimation used year-specific `NIS_STRATUM` with discharge-level linearization. Because `HOSP_NIS` is unavailable by study decision, confidence intervals and p-values are strata-adjusted approximations rather than full NIS hospital-cluster-adjusted estimates.
+
+---
+
 # Commands 17A and 17B: Sepsis-by-HM-Subtype Interaction
 
 The adjusted logistic model included documented sepsis, mutually exclusive HM subtype, and all sepsis-by-subtype interaction terms, with adjustment for continuous age, sex, race/ethnicity, payer, income quartile, cancer-excluded Charlson category, hospital region, hospital location/teaching status, hospital bed size, and admission year. All 994,992 sampled HM hospitalizations were included.

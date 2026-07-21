@@ -80,6 +80,10 @@ Double-click `launch_phase_9.command` to open the executed Commands 17A and 17B 
 
 Double-click `launch_phase_10.command` to open the executed Commands 19A–19C notebook. It reports documented inpatient palliative-care use among in-hospital decedents overall, by sepsis status, and by mutually exclusive HM subtype.
 
+## Annual palliative-care trends
+
+Double-click `launch_phase_11.command` to open the executed Commands 20A–20C notebook. It reports overall, sepsis-stratified, and sepsis-subtype annual trends in documented inpatient palliative-care use.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.
