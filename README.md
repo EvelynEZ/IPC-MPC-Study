@@ -68,6 +68,10 @@ Double-click `launch_phase_6.command` to open the executed Task 12A–B notebook
 
 Double-click `launch_phase_7.command` to open the executed Command 15 notebook. It reports documented inpatient palliative-care use across mutually exclusive HM subtypes overall and separately for hospitalizations with and without documented sepsis.
 
+## Primary adjusted analysis
+
+Double-click `launch_phase_8.command` to open the executed Task 14 notebook. It reports the adjusted association between documented sepsis and documented inpatient palliative-care use, including the adjusted odds ratio, standardized probabilities, and adjusted absolute difference.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.

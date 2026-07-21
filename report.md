@@ -256,3 +256,29 @@ HM subtype categories are mutually exclusive and use the first qualifying HM dia
 | **Total** | **158,421** | **25,961** | **792,105** | **129,805** | **16.39% (16.21%–16.57%)** | **<0.001** |
 
 Counts and prevalence estimates use `DISCWT`. Confidence intervals and overall tests use year-specific `NIS_STRATUM` with Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, sampled discharges are treated as variance units; inference is therefore a strata-adjusted approximation rather than full NIS survey inference.
+
+---
+
+# Primary Adjusted Analysis
+
+A `DISCWT`-weighted logistic-regression model examined the association between documented sepsis (`A41*`) and documented inpatient palliative-care use (`Z51.5` in any diagnosis position). The model adjusted for continuous age, sex, race/ethnicity, primary payer, median household-income quartile, cancer-excluded Charlson category, hospital region, hospital location/teaching status, hospital bed size, admission year, and mutually exclusive HM subtype. All 994,992 sampled HM hospitalizations were included.
+
+| Measure | Estimate | 95% CI | P-value |
+|---|---:|---:|---:|
+| Adjusted odds ratio for documented sepsis | 2.801 | 2.756–2.848 | <0.001 |
+| Adjusted absolute probability difference | 9.46 percentage points | 9.27–9.65 | <0.001 |
+| **Total** | — | — | — |
+
+## Adjusted Palliative-Care Probabilities
+
+Probabilities are average marginal predictions standardized over the observed weighted distribution of all adjustment covariates.
+
+| Sepsis status | Adjusted probability | 95% CI |
+|---|---:|---:|
+| No documented sepsis | 6.58% | 6.53%–6.63% |
+| Documented sepsis | 16.04% | 15.86%–16.22% |
+| **Total observed cohort** | — | — |
+
+After covariate adjustment, documented sepsis was associated with approximately 2.80-fold higher odds of documented inpatient palliative-care use and a 9.46-percentage-point higher adjusted probability. This observational association does not establish causality.
+
+Variance estimation used year-specific `NIS_STRATUM` with discharge-level Taylor linearization. Because `HOSP_NIS` is unavailable by study decision, confidence intervals and p-values are strata-adjusted approximations rather than full NIS hospital-cluster-adjusted estimates.
