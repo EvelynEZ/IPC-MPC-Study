@@ -285,6 +285,58 @@ Variance estimation used year-specific `NIS_STRATUM` with discharge-level Taylor
 
 ---
 
+# Commands 19A–19C: In-Hospital Decedent Analysis
+
+In-hospital decedents were defined by `DIED=1`. There were 441 records with missing `DIED`, which were excluded from the decedent restriction.
+
+## Command 19A: Documented Inpatient Palliative-Care Use Among Decedents
+
+| Cohort | Unweighted sample n | Unweighted palliative-care n | Weighted hospitalizations | Weighted palliative-care n | Weighted % (95% CI) | P-value |
+|---|---:|---:|---:|---:|---:|---:|
+| Decedents without documented sepsis | 26,527 | 15,179 | 132,635 | 75,895 | 57.22% (56.63%–57.81%) | <0.001 |
+| Decedents with documented sepsis | 27,210 | 13,329 | 136,050 | 66,645 | 48.99% (48.40%–49.57%) |  |
+| **Total decedents** | **53,737** | **28,508** | **268,685** | **142,540** | **53.05% (52.64%–53.46%)** | **<0.001** |
+
+## Command 19B: Adjusted Decedent Interaction Model
+
+The overall sepsis-by-HM-subtype interaction was significant (Wald χ²=18.816, 8 df; p=0.016).
+
+| HM subtype | Adjusted probability without sepsis | Adjusted probability with sepsis | Adjusted difference, pp (95% CI) | Subtype p-value | Overall interaction p-value |
+|---|---:|---:|---:|---:|---:|
+| Lymphoma | 59.08% | 50.57% | −8.52 (−10.06 to −6.97) | <0.001 | 0.016 |
+| AML | 59.47% | 50.12% | −9.35 (−11.52 to −7.18) | <0.001 |  |
+| CML | 56.39% | 52.50% | −3.89 (−9.15 to 1.38) | 0.148 |  |
+| CLL/chronic leukemia | 54.75% | 47.49% | −7.26 (−9.70 to −4.81) | <0.001 |  |
+| ALL/unspecified acute leukemia | 55.74% | 47.30% | −8.45 (−13.38 to −3.52) | <0.001 |  |
+| Other leukemia | 54.89% | 48.89% | −6.00 (−10.90 to −1.10) | 0.016 |  |
+| Myeloma/plasma-cell neoplasm | 56.66% | 50.39% | −6.27 (−8.42 to −4.12) | <0.001 |  |
+| MDS | 54.57% | 48.34% | −6.24 (−8.63 to −3.84) | <0.001 |  |
+| MPN | 51.64% | 48.37% | −3.27 (−5.92 to −0.62) | 0.015 |  |
+| **Total** | — | — | — | — | **0.016** |
+
+## Command 19C: Sepsis Decedents by HM Subtype
+
+The unadjusted subtype comparison had p=0.002. After covariate adjustment, the overall subtype comparison remained significant (Wald χ²=20.066, 8 df; p=0.010).
+
+| HM subtype | Unweighted sample n | Weighted hospitalizations | Weighted palliative-care % (95% CI) | Adjusted probability (95% CI) | Overall adjusted p-value |
+|---|---:|---:|---:|---:|---:|
+| Lymphoma | 8,317 | 41,585 | 49.87% (48.81%–50.94%) | 50.04% (48.99%–51.10%) | 0.010 |
+| AML | 4,090 | 20,450 | 50.56% (49.04%–52.08%) | 49.77% (48.25%–51.30%) |  |
+| CML | 601 | 3,005 | 51.41% (47.44%–55.37%) | 51.76% (47.87%–55.66%) |  |
+| CLL/chronic leukemia | 3,058 | 15,290 | 48.59% (46.84%–50.35%) | 46.64% (44.89%–48.39%) |  |
+| ALL/unspecified acute leukemia | 819 | 4,095 | 44.20% (40.84%–47.61%) | 47.08% (43.61%–50.55%) |  |
+| Other leukemia | 768 | 3,840 | 48.70% (45.19%–52.22%) | 48.06% (44.57%–51.54%) |  |
+| Myeloma/plasma-cell neoplasm | 3,876 | 19,380 | 48.50% (46.94%–50.07%) | 49.82% (48.25%–51.38%) |  |
+| MDS | 3,004 | 15,020 | 48.70% (46.92%–50.48%) | 47.52% (45.76%–49.29%) |  |
+| MPN | 2,677 | 13,385 | 46.28% (44.41%–48.17%) | 47.85% (45.98%–49.73%) |  |
+| **Total** | **27,210** | **136,050** | **48.99% (48.40%–49.57%)** | — | **0.010** |
+
+Among decedents, documented inpatient palliative-care use was lower in hospitalizations with documented sepsis than without sepsis. This inverse association contrasts with the primary all-hospitalization analysis and should be interpreted as a conditional association within a selected outcome-defined cohort, not causally.
+
+Estimates use `DISCWT` and year-specific `NIS_STRATUM`. Because `HOSP_NIS` is unavailable by study decision, confidence intervals and p-values are strata-adjusted approximations rather than full NIS hospital-cluster-adjusted estimates.
+
+---
+
 # Commands 17A and 17B: Sepsis-by-HM-Subtype Interaction
 
 The adjusted logistic model included documented sepsis, mutually exclusive HM subtype, and all sepsis-by-subtype interaction terms, with adjustment for continuous age, sex, race/ethnicity, payer, income quartile, cancer-excluded Charlson category, hospital region, hospital location/teaching status, hospital bed size, and admission year. All 994,992 sampled HM hospitalizations were included.

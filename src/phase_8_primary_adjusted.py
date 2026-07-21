@@ -127,7 +127,7 @@ def build_model_frame(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
         SELECT
             concat(CAST(YEAR AS INTEGER), ':', CAST(NIS_STRATUM AS INTEGER)) AS stratum_id,
             DISCWT::DOUBLE AS weight, sepsis::INTEGER AS sepsis,
-            palliative_care::INTEGER AS palliative_care, AGE::DOUBLE AS age,
+            palliative_care::INTEGER AS palliative_care, DIED::INTEGER AS died, AGE::DOUBLE AS age,
             CASE FEMALE WHEN 0 THEN 'Male' WHEN 1 THEN 'Female' ELSE 'Missing' END AS sex,
             CASE RACE WHEN 1 THEN 'White' WHEN 2 THEN 'Black' WHEN 3 THEN 'Hispanic'
                 WHEN 4 THEN 'Asian/Pacific Islander' WHEN 5 THEN 'Native American'

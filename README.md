@@ -76,6 +76,10 @@ Double-click `launch_phase_8.command` to open the executed Commands 16 and 16B n
 
 Double-click `launch_phase_9.command` to open the executed Commands 17A and 17B notebook. It reports the joint interaction test and subtype-specific adjusted probabilities and absolute differences.
 
+## In-hospital decedent analysis
+
+Double-click `launch_phase_10.command` to open the executed Commands 19A–19C notebook. It reports documented inpatient palliative-care use among in-hospital decedents overall, by sepsis status, and by mutually exclusive HM subtype.
+
 ## Data handling
 
 - Do not copy source medical data into this repository.
