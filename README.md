@@ -2,6 +2,10 @@
 
 Reproducible analysis workspace for the NIS 2016–2022 dataset. Source data stays outside this Git repository and is queried directly as a partitioned Parquet dataset.
 
+## Complete study notebook
+
+Use `notebooks/IPC_MPC_Study_Master.ipynb` as the primary single-notebook reference. On macOS, double-click `launch_master_notebook.command`, then choose **Run → Run All Cells**. It loads the cached Phase 1–2 cohort outputs and runs every validated report-facing analysis through Phase 11. The smaller phase notebooks remain available as optional review checkpoints.
+
 ## Local setup
 
 ```bash
