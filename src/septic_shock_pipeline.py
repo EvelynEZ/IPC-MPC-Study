@@ -19,6 +19,7 @@ from src import phase_9_interaction
 from src import phase_10_decedents
 from src import phase_11_trends
 from src import bmt_shock_interaction
+from src import stratified_covariate_effects
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -93,6 +94,7 @@ def write_markdown_report(results: dict[str, Any]) -> Path:
         ("21. BMT/HSCT conditional septic-shock odds ratios", OUTPUT_ROOT / "bmt_interaction/conditional_odds_ratios.csv"),
         ("21. BMT/HSCT adjusted four-group probabilities", OUTPUT_ROOT / "bmt_interaction/adjusted_four_group_probabilities.csv"),
         ("21. BMT/HSCT adjusted probability differences", OUTPUT_ROOT / "bmt_interaction/adjusted_probability_differences.csv"),
+        ("22. Covariate effects stratified by septic-shock status", OUTPUT_ROOT / "stratified_covariate_effects/stratified_covariate_adjusted_odds_ratios.csv"),
     ]
     lines = [
         "# Septic Shock and Documented Inpatient Palliative-Care Use in Hematologic Malignancy Hospitalizations",
@@ -219,6 +221,7 @@ def main() -> dict[str, Any]:
         "phase_10": phase_10_decedents.main(),
         "phase_11": phase_11_trends.main(),
         "bmt_shock_interaction": bmt_shock_interaction.main(),
+        "stratified_covariate_effects": stratified_covariate_effects.main(),
     }
     summary_path = OUTPUT_ROOT / "septic_shock_pipeline_summary.json"
     summary_path.write_text(json.dumps(results, indent=2) + "\n")

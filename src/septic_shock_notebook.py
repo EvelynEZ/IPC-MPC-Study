@@ -160,5 +160,8 @@ def show_step(step: int) -> None:
     elif step == 21:
         directory = OUT / "bmt_interaction"
         display(Markdown((directory / "bmt_shock_interaction_report.md").read_text()))
+    elif step == 22:
+        path = OUT / "stratified_covariate_effects/stratified_covariate_effects_report.md"
+        display(Markdown(path.read_text()))
     else:
-        raise ValueError("Step must be from 1 through 21.")
+        raise ValueError("Step must be from 1 through 22.")
