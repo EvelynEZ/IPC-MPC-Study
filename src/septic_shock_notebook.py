@@ -157,5 +157,18 @@ def show_step(step: int) -> None:
         _show(pd.DataFrame([["Septic shock × HM subtype", s["wald_chi_square"], s["degrees_of_freedom"], s["overall_interaction_p_value"]], ["Total", "—", "—", s["overall_interaction_p_value"]]], columns=["Test", "Wald chi-square", "df", "p-value"]))
     elif step == 20:
         _show(_rename_shock(_csv(9, "subtype_adjusted_probabilities.csv")), "The total row reports the overall interaction p-value.")
+    elif step == 21:
+        directory = OUT / "bmt_interaction"
+        def read(name: str) -> pd.DataFrame:
+            return pd.read_csv(directory / name, dtype=str).fillna("")
+        display(Markdown("### Four observed groups"))
+        _show(read("four_group_descriptive.csv"))
+        display(Markdown("### Conditional adjusted odds ratios"))
+        _show(read("conditional_odds_ratios.csv"), "The final row reports the 1-df multiplicative interaction Wald p-value.")
+        display(Markdown("### Adjusted marginal probabilities"))
+        _show(read("adjusted_four_group_probabilities.csv"))
+        display(Markdown("### Adjusted probability differences"))
+        _show(read("adjusted_probability_differences.csv"), "The difference-in-differences is an additive-scale interaction; it can differ from the logistic model's multiplicative interaction test.")
+        display(Markdown("*BMT/HSCT status is diagnosis-based (`Z94.81` or `Z94.84` in any diagnosis position). Actual inpatient HSCT procedures cannot be added because procedure-code fields are unavailable in the source extract.*"))
     else:
-        raise ValueError("Step must be from 1 through 20.")
+        raise ValueError("Step must be from 1 through 21.")

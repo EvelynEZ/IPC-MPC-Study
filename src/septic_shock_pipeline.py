@@ -18,6 +18,7 @@ from src import phase_8_primary_adjusted
 from src import phase_9_interaction
 from src import phase_10_decedents
 from src import phase_11_trends
+from src import bmt_shock_interaction
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -88,6 +89,10 @@ def write_markdown_report(results: dict[str, Any]) -> Path:
         ("18. Annual trends among septic-shock admissions by HM subtype", OUTPUT_ROOT / "phase_11/annual_sepsis_palliative_care_by_subtype.csv"),
         ("18. Subtype-specific EAPC", OUTPUT_ROOT / "phase_11/sepsis_subtype_trend_tests.csv"),
         ("20. Subtype-specific adjusted marginal effects", OUTPUT_ROOT / "phase_9/subtype_adjusted_probabilities.csv"),
+        ("21. BMT/HSCT four-group descriptive analysis", OUTPUT_ROOT / "bmt_interaction/four_group_descriptive.csv"),
+        ("21. BMT/HSCT conditional septic-shock odds ratios", OUTPUT_ROOT / "bmt_interaction/conditional_odds_ratios.csv"),
+        ("21. BMT/HSCT adjusted four-group probabilities", OUTPUT_ROOT / "bmt_interaction/adjusted_four_group_probabilities.csv"),
+        ("21. BMT/HSCT adjusted probability differences", OUTPUT_ROOT / "bmt_interaction/adjusted_probability_differences.csv"),
     ]
     lines = [
         "# Septic Shock and Documented Inpatient Palliative-Care Use in Hematologic Malignancy Hospitalizations",
@@ -213,6 +218,7 @@ def main() -> dict[str, Any]:
         "phase_9": phase_9_interaction.main(),
         "phase_10": phase_10_decedents.main(),
         "phase_11": phase_11_trends.main(),
+        "bmt_shock_interaction": bmt_shock_interaction.main(),
     }
     summary_path = OUTPUT_ROOT / "septic_shock_pipeline_summary.json"
     summary_path.write_text(json.dumps(results, indent=2) + "\n")
