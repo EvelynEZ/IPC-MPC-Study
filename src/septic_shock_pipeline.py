@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import csv
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +25,96 @@ SOURCE_DATABASE = REPO_ROOT / "outputs/phase_1_2/hm_cohort.duckdb"
 OUTPUT_ROOT = REPO_ROOT / "outputs/septic_shock"
 EXPOSURE_DATABASE = OUTPUT_ROOT / "hm_cohort_septic_shock.duckdb"
 PIPELINE_VERSION = "1.0.0"
+
+
+def _report_label(value: object) -> str:
+    """Replace legacy engine labels and escape Markdown table delimiters."""
+    text = str(value)
+    replacements = {
+        "without documented sepsis": "without septic shock",
+        "with documented sepsis": "with septic shock",
+        "No documented sepsis": "No septic shock",
+        "Documented sepsis": "Septic shock",
+        "No sepsis": "No septic shock",
+        "Sepsis": "Septic shock",
+        "documented sepsis": "documented septic shock",
+    }
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+    return text.replace("|", "\\|").replace("\n", " ")
+
+
+def _csv_markdown(path: Path) -> str:
+    """Render a generated CSV as a portable Markdown table."""
+    with path.open(newline="") as handle:
+        rows = list(csv.reader(handle))
+    if not rows:
+        return "_No rows were produced._"
+    header, body = rows[0], rows[1:]
+    friendly_header = []
+    for value in header:
+        value = value.replace("no_sepsis", "no_septic_shock").replace("sepsis", "septic_shock")
+        friendly_header.append(value.replace("_", " ").capitalize())
+    lines = [
+        "| " + " | ".join(_report_label(value) for value in friendly_header) + " |",
+        "| " + " | ".join("---" for _ in header) + " |",
+    ]
+    lines.extend("| " + " | ".join(_report_label(value) for value in row) + " |" for row in body)
+    return "\n".join(lines)
+
+
+def write_markdown_report(results: dict[str, Any]) -> Path:
+    """Write a human-readable companion to the machine-readable JSON summary."""
+    x = results["exposure"]
+    sections = [
+        ("1. Cohort definition", None),
+        ("2. Baseline characteristics", OUTPUT_ROOT / "phase_3/table_1_baseline_characteristics.csv"),
+        ("3. Clinical outcomes — weighted", OUTPUT_ROOT / "phase_5/clinical_outcomes_by_sepsis.csv"),
+        ("3. Clinical outcomes — unweighted", OUTPUT_ROOT / "phase_5/clinical_outcomes_by_sepsis_unweighted.csv"),
+        ("6. Complications", OUTPUT_ROOT / "phase_4/complications_by_sepsis.csv"),
+        ("7. Overall documented inpatient palliative-care utilization", OUTPUT_ROOT / "phase_6/palliative_care_prevalence.csv"),
+        ("8. Annual palliative-care utilization by septic-shock status", OUTPUT_ROOT / "phase_6/annual_palliative_care_by_sepsis.csv"),
+        ("9. Palliative-care utilization by HM subtype — all HM", OUTPUT_ROOT / "phase_7/subtype_palliative_care_all_hm.csv"),
+        ("10. Palliative-care utilization by HM subtype — no septic shock", OUTPUT_ROOT / "phase_7/subtype_palliative_care_no_sepsis.csv"),
+        ("11. Palliative-care utilization by HM subtype — septic shock", OUTPUT_ROOT / "phase_7/subtype_palliative_care_sepsis.csv"),
+        ("12. Primary adjusted association", OUTPUT_ROOT / "phase_8/primary_adjusted_results.csv"),
+        ("12. Adjusted marginal probabilities", OUTPUT_ROOT / "phase_8/adjusted_probabilities.csv"),
+        ("13. Decedent analysis", OUTPUT_ROOT / "phase_10/decedent_palliative_care_by_sepsis.csv"),
+        ("14. Adjusted decedent interaction", OUTPUT_ROOT / "phase_10/adjusted_decedent_interaction.csv"),
+        ("15. Septic-shock decedents by HM subtype — unadjusted", OUTPUT_ROOT / "phase_10/sepsis_decedent_subtype_unadjusted.csv"),
+        ("15. Septic-shock decedents by HM subtype — adjusted", OUTPUT_ROOT / "phase_10/sepsis_decedent_subtype_adjusted.csv"),
+        ("16. Overall annual trends", OUTPUT_ROOT / "phase_11/annual_overall_palliative_care.csv"),
+        ("17. Trends by septic-shock status", OUTPUT_ROOT / "phase_11/annual_palliative_care_by_sepsis.csv"),
+        ("18. Annual trends among septic-shock admissions by HM subtype", OUTPUT_ROOT / "phase_11/annual_sepsis_palliative_care_by_subtype.csv"),
+        ("18. Subtype-specific EAPC", OUTPUT_ROOT / "phase_11/sepsis_subtype_trend_tests.csv"),
+        ("20. Subtype-specific adjusted marginal effects", OUTPUT_ROOT / "phase_9/subtype_adjusted_probabilities.csv"),
+    ]
+    lines = [
+        "# Septic Shock and Documented Inpatient Palliative-Care Use in Hematologic Malignancy Hospitalizations",
+        "",
+        "## Analysis definition",
+        "",
+        "Primary exposure: documented septic shock, defined as exact normalized ICD-10-CM code `R65.21` (`R6521`) in any diagnosis position. The outcome is documented inpatient palliative-care use (`Z51.5`). Estimates use `DISCWT`; variance estimation accounts for year-specific `NIS_STRATUM` without `HOSP_NIS`.",
+        "",
+        "This Markdown file is intended for human review. `septic_shock_pipeline_summary.json` remains the machine-readable audit record.",
+        "",
+    ]
+    for heading, path in sections:
+        lines.extend([f"## {heading}", ""])
+        if path is None:
+            lines.extend([
+                "| Cohort | Unweighted hospitalizations | Weighted hospitalizations |",
+                "| --- | ---: | ---: |",
+                f'| No septic shock | {x["no_shock_unweighted"]:,} | {x["no_shock_weighted"]:,} |',
+                f'| Septic shock (`R65.21`) | {x["shock_unweighted"]:,} | {x["shock_weighted"]:,} |',
+                f'| Total | {x["total_unweighted"]:,} | {x["total_weighted"]:,} |',
+            ])
+        else:
+            lines.append(_csv_markdown(path))
+        lines.append("")
+    report_path = OUTPUT_ROOT / "septic_shock_report.md"
+    report_path.write_text("\n".join(lines), encoding="utf-8")
+    return report_path
 
 
 def build_exposure_database() -> dict[str, Any]:
@@ -125,12 +216,14 @@ def main() -> dict[str, Any]:
     }
     summary_path = OUTPUT_ROOT / "septic_shock_pipeline_summary.json"
     summary_path.write_text(json.dumps(results, indent=2) + "\n")
+    report_path = write_markdown_report(results)
     print(json.dumps({
         "exposure": exposure,
         "primary_adjusted": results["phase_8"]["primary_results"],
         "interaction": results["phase_9"]["joint_interaction_test"],
         "decedent_interaction": results["phase_10"]["command_19b_interaction_test"],
         "overall_eapc": results["phase_11"]["command_20a_eapc"],
+        "human_readable_report": str(report_path),
     }, indent=2))
     return results
 

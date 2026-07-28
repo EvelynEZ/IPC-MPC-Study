@@ -6,6 +6,8 @@ Reproducible analysis workspace for the NIS 2016–2022 dataset. Source data sta
 
 Use `notebooks/IPC_MPC_Septic_Shock_Master.ipynb` as the primary single-notebook reference. On macOS, double-click `launch_septic_shock_notebook.command`, then choose **Run → Run All Cells**. It runs the 20 requested steps using exact normalized ICD-10-CM code `R6521` as the primary exposure. Results are isolated under `outputs/septic_shock/`, preserving the earlier A41 sepsis analysis and `notebooks/IPC_MPC_Study_Master.ipynb` for auditability.
 
+For a report-style review outside Jupyter, open `outputs/septic_shock/septic_shock_report.md`. The pipeline regenerates it automatically while retaining `septic_shock_pipeline_summary.json` for machine-readable auditing.
+
 ## Local setup
 
 ```bash
