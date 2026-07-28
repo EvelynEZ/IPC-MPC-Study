@@ -4,7 +4,7 @@ Reproducible analysis workspace for the NIS 2016–2022 dataset. Source data sta
 
 ## Complete study notebook
 
-Use `notebooks/IPC_MPC_Study_Master.ipynb` as the primary single-notebook reference. On macOS, double-click `launch_master_notebook.command`, then choose **Run → Run All Cells**. It loads the cached Phase 1–2 cohort outputs and runs every validated report-facing analysis through Phase 11. The smaller phase notebooks remain available as optional review checkpoints.
+Use `notebooks/IPC_MPC_Septic_Shock_Master.ipynb` as the primary single-notebook reference. On macOS, double-click `launch_septic_shock_notebook.command`, then choose **Run → Run All Cells**. It runs the 20 requested steps using exact normalized ICD-10-CM code `R6521` as the primary exposure. Results are isolated under `outputs/septic_shock/`, preserving the earlier A41 sepsis analysis and `notebooks/IPC_MPC_Study_Master.ipynb` for auditability.
 
 ## Local setup
 
