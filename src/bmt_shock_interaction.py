@@ -134,6 +134,111 @@ def linear_result(estimate: float, gradient: np.ndarray, covariance: np.ndarray)
     return estimate, estimate - 1.96 * se, estimate + 1.96 * se, p
 
 
+def write_report(summary: dict[str, Any]) -> Path:
+    """Create the report-facing narrative and tables for this analysis."""
+    descriptive = summary["descriptive"]
+    odds = summary["conditional_odds_ratios"]
+    probabilities = summary["adjusted_probabilities"]
+    differences = summary["probability_differences"]
+    interaction = summary["interaction_wald_test"]
+    lines = [
+        "# BMT/HSCT Modification of the Association Between Septic Shock and Documented Inpatient Palliative-Care Use",
+        "",
+        "**Primary outcome:** Documented inpatient palliative-care use, defined as ICD-10-CM `Z51.5` in any diagnosis position.",
+        "",
+        "**Primary exposure:** Documented septic shock, defined as ICD-10-CM `R65.21` in any diagnosis position.",
+        "",
+        "**Effect modifier:** Diagnosis-based BMT/HSCT status, defined as ICD-10-CM `Z94.81` or `Z94.84` in any diagnosis position.",
+        "",
+        "## Four-Group Descriptive Results",
+        "",
+        "| BMT/HSCT and septic-shock group | Unweighted n | Unweighted PC events | Weighted n, 2016–2022 | Weighted PC events | Weighted PC prevalence | Adjusted overall group p-value |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in descriptive:
+        lines.append(
+            f'| {row["group"]} | {row["unweighted_hospitalizations"]:,} | {row["unweighted_pc_events"]:,} | '
+            f'{row["weighted_hospitalizations"]:,} | {row["weighted_pc_events"]:,} | '
+            f'{row["weighted_pc_percent"]:.2f}% | {row["adjusted_overall_group_p_value"] or ""} |'
+        )
+    lines.extend([
+        "",
+        "Counts describe adult hematologic-malignancy hospitalizations. Weighted counts and prevalence estimates use `DISCWT`. The p-value shown on the total row is the adjusted joint Wald test for septic shock, BMT/HSCT status, and their interaction.",
+        "",
+        "## Adjusted Interaction Model",
+        "",
+        "A survey-weighted logistic-regression model evaluated whether diagnosis-based BMT/HSCT status modified the association between septic shock and documented inpatient palliative-care use. The model included septic shock, BMT/HSCT status, and a septic shock × BMT/HSCT interaction and adjusted for continuous age, sex, race/ethnicity, primary payer, income quartile, cancer-excluded Charlson category, mutually exclusive HM subtype, hospital region, hospital location/teaching status, hospital bed size, and admission year.",
+        "",
+        "| Interaction test | Wald chi-square | Degrees of freedom | P-value |",
+        "| --- | ---: | ---: | ---: |",
+        f'| Septic shock × BMT/HSCT | {interaction["wald_chi_square"]:.3f} | {interaction["degrees_of_freedom"]} | {interaction["p_value"]} |',
+        "| Total | — | — | " + interaction["p_value"] + " |",
+        "",
+        "The multiplicative interaction was not statistically significant, indicating no evidence that BMT/HSCT status modified the adjusted septic-shock odds ratio for documented inpatient palliative-care use.",
+        "",
+        "## Conditional Adjusted Odds Ratios",
+        "",
+        "| Contrast | Adjusted odds ratio | 95% CI | P-value |",
+        "| --- | ---: | ---: | ---: |",
+    ])
+    for row in odds:
+        ci = "—" if row["adjusted_odds_ratio"] == "—" else f'{row["ci_95_lower"]:.3f}–{row["ci_95_upper"]:.3f}'
+        estimate = row["adjusted_odds_ratio"] if row["adjusted_odds_ratio"] == "—" else f'{row["adjusted_odds_ratio"]:.3f}'
+        lines.append(f'| {row["contrast"]} | {estimate} | {ci} | {row["p_value"]} |')
+    lines.extend([
+        "",
+        "## Adjusted Palliative-Care Probabilities",
+        "",
+        "Probabilities are average marginal predictions standardized over the observed weighted distribution of all adjustment covariates.",
+        "",
+        "| BMT/HSCT and septic-shock group | Adjusted probability | 95% CI |",
+        "| --- | ---: | ---: |",
+    ])
+    for row in probabilities:
+        if row["adjusted_pc_probability_percent"] == "—":
+            estimate, ci = "—", "—"
+        else:
+            estimate = f'{row["adjusted_pc_probability_percent"]:.2f}%'
+            ci = f'{row["ci_95_lower_percent"]:.2f}%–{row["ci_95_upper_percent"]:.2f}%'
+        lines.append(f'| {row["group"]} | {estimate} | {ci} |')
+    lines.extend([
+        "",
+        "## Adjusted Septic-Shock Probability Differences",
+        "",
+        "| Contrast | Adjusted difference, percentage points | 95% CI | P-value |",
+        "| --- | ---: | ---: | ---: |",
+    ])
+    for row in differences:
+        if row["adjusted_difference_pp"] == "—":
+            estimate, ci = "—", "—"
+        else:
+            estimate = f'{row["adjusted_difference_pp"]:.2f}'
+            ci = f'{row["ci_95_lower_pp"]:.2f} to {row["ci_95_upper_pp"]:.2f}'
+        lines.append(f'| {row["contrast"]} | {estimate} | {ci} | {row["p_value"]} |')
+    lines.extend([
+        "",
+        "## Interpretation",
+        "",
+        "Septic shock was associated with substantially greater adjusted documented inpatient palliative-care use in both BMT/HSCT and non-BMT hospitalizations. The conditional adjusted odds ratios were similar, and the prespecified multiplicative interaction was not significant (`p=0.445`).",
+        "",
+        "On the additive probability scale, septic shock was associated with an 18.52-percentage-point increase among non-BMT hospitalizations and a 20.38-point increase among BMT hospitalizations. The difference between these increases was 1.86 percentage points (95% CI, 0.04–3.69; `p=0.045`). Thus, evidence of effect modification depends on the statistical scale: absent on the multiplicative odds scale but marginally present on the additive probability scale.",
+        "",
+        "Because the primary interaction test was the logistic-model Wald test, the primary conclusion is that diagnosis-based BMT/HSCT status did not significantly modify the association between septic shock and documented inpatient palliative-care use. The additive interaction should be reported as a complementary marginal-effect result.",
+        "",
+        "## Methodologic Notes and Limitations",
+        "",
+        "- BMT/HSCT status is diagnosis-based. The source extract contains `I10_NPR`, the number of procedures, but not individual ICD-10-PCS procedure-code fields. Consequently, HSCT procedures performed during the hospitalization could not be added to the definition.",
+        "- Hospitalizations without `Z94.81` or `Z94.84` were classified as no BMT/HSCT; some may therefore be misclassified.",
+        "- Estimates use `DISCWT` and account for year-specific `NIS_STRATUM`. `HOSP_NIS` is unavailable by study decision, so these are not full hospital-cluster-adjusted NIS variance estimates.",
+        "- Diagnosis fields establish co-documentation during hospitalization but not temporal ordering or causality.",
+        "- The analysis is hospitalization-based and does not identify unique longitudinal patients.",
+        "",
+    ])
+    path = OUTPUT_DIR / "bmt_shock_interaction_report.md"
+    path.write_text("\n".join(lines), encoding="utf-8")
+    return path
+
+
 def main() -> dict[str, Any]:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     connection = duckdb.connect(str(COHORT_DATABASE), read_only=True)
@@ -217,6 +322,8 @@ def main() -> dict[str, Any]:
         "adjusted_probabilities": margin_rows, "probability_differences": effect_rows,
         "variance_note": "DISCWT-weighted model with year-specific NIS_STRATUM linearization and discharge-level variance units; HOSP_NIS unavailable by study decision."}
     (OUTPUT_DIR / "bmt_shock_interaction_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+    report_path = write_report(summary)
+    summary["report_path"] = str(report_path)
     print(json.dumps(summary, indent=2))
     return summary
 
