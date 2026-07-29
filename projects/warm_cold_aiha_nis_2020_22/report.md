@@ -336,3 +336,49 @@ Interpret cautiously: only 39 deaths were observed relative to the number of adj
 | Age, per year | 1.017 | 0.993–1.042 | 0.171 |
 | Associated lymphoid malignancy: yes vs no | 1.030 | 0.471–2.253 | 0.941 |
 | Charlson Comorbidity Index, per point | 1.159 | 1.001–1.343 | 0.048 |
+<!-- ADJUSTED_LOS_MODEL -->
+# Adjusted Association Between AIHA Subtype and Length of Stay
+
+A multivariable linear-regression model used hospital length of stay in days as the continuous outcome and AIHA subtype as the primary exposure. Warm AIHA was the reference group. The model adjusted for continuous age, sex, race/ethnicity, associated lymphoid malignancy, hospital region, hospital teaching status, hospital bed size, and continuous Charlson Comorbidity Index. Teaching status was coded as urban teaching versus nonteaching; nonteaching combines rural and urban nonteaching hospitals.
+
+Heteroskedasticity-consistent HC3 standard errors were used because length of stay is right-skewed. The exposure coefficient is an adjusted mean difference in days, calculated as cold AIHA minus warm AIHA.
+
+## Primary exposure result
+
+| Exposure comparison | Adjusted mean difference, days | 95% CI | P-value |
+| --- | ---: | ---: | ---: |
+| Cold AIHA versus warm AIHA | -0.600 | -1.436 to 0.236 | 0.160 |
+
+## Model diagnostics
+
+| Measure | Value |
+| --- | ---: |
+| Analysis hospitalizations | 1,379 |
+| Unadjusted mean LOS, warm AIHA | 6.57 days |
+| Unadjusted mean LOS, cold AIHA | 5.93 days |
+| R-squared | 0.0343 |
+| Standard-error estimator | HC3 |
+
+`DISCWT` equals 5 for every record in this 2020–2022 cohort, so applying it does not change coefficients or fitted values. Each sampled hospitalization was used once for variance estimation.
+
+## Full adjusted model
+
+| Covariate contrast | Adjusted coefficient, days | 95% CI | P-value |
+| --- | ---: | ---: | ---: |
+| Cold AIHA vs warm AIHA | -0.600 | -1.436 to 0.236 | 0.160 |
+| Sex: Female | -0.399 | -1.159 to 0.361 | 0.303 |
+| Race/ethnicity: Asian/Pacific Islander | -0.360 | -2.195 to 1.475 | 0.701 |
+| Race/ethnicity: Black | 0.898 | -1.119 to 2.915 | 0.383 |
+| Race/ethnicity: Hispanic | -0.200 | -1.413 to 1.012 | 0.746 |
+| Race/ethnicity: Missing | -0.981 | -2.018 to 0.055 | 0.064 |
+| Race/ethnicity: Native American | 2.685 | -9.139 to 14.509 | 0.656 |
+| Race/ethnicity: Other | 1.114 | -1.712 to 3.939 | 0.440 |
+| Hospital region: Midwest | 0.059 | -0.782 to 0.899 | 0.891 |
+| Hospital region: South | 1.004 | 0.119 to 1.888 | 0.026 |
+| Hospital region: West | 1.113 | -0.252 to 2.477 | 0.110 |
+| Hospital teaching status: Teaching | 1.416 | 0.552 to 2.281 | 0.001 |
+| Hospital bed size: Large | 1.317 | 0.395 to 2.239 | 0.005 |
+| Hospital bed size: Medium | 0.199 | -0.694 to 1.092 | 0.662 |
+| Age, per year | 0.001 | -0.022 to 0.023 | 0.935 |
+| Associated lymphoid malignancy: yes vs no | -0.120 | -1.197 to 0.957 | 0.827 |
+| Charlson Comorbidity Index, per point | 0.337 | 0.080 to 0.595 | 0.010 |
