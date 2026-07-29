@@ -4,6 +4,15 @@
 
 Population: all adult NIS hospitalizations (`AGE >= 18`) from 2020 through 2022. Warm AIHA is exact normalized `D59.11`; cold AIHA is exact normalized `D59.12`.
 
+## All Adult Hospitalization Denominators
+
+| Admission year | Unweighted adult hospitalizations | DISCWT-weighted adult hospitalizations |
+| --- | ---: | ---: |
+| 2020 | 5,533,477 | 27,667,386 |
+| 2021 | 5,688,355 | 28,441,739 |
+| 2022 | 5,571,320 | 27,856,590 |
+| Total | 16,793,152 | 83,965,715 |
+
 ## Primary-diagnosis definition
 
 | Phenotype | Unweighted hospitalizations | DISCWT-weighted hospitalizations |

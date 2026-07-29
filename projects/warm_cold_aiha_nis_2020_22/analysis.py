@@ -44,6 +44,11 @@ def main() -> dict:
     cold = " OR ".join(f"{code} = 'D5912'" for code in dx)
     either = f"({warm}) OR ({cold})"
     connection = duckdb.connect()
+    denominator_raw = connection.execute("""
+        SELECT CAST(YEAR AS INTEGER), count(*)::BIGINT, round(sum(DISCWT), 0)::BIGINT
+        FROM read_parquet(?) WHERE AGE >= 18 AND YEAR BETWEEN 2020 AND 2022
+        GROUP BY 1 ORDER BY 1
+    """, [dataset_glob()]).fetchall()
     primary_raw = connection.execute(f"""
         SELECT {dx[0]} AS code, count(*)::BIGINT, round(sum(DISCWT), 0)::BIGINT
         FROM read_parquet(?)
@@ -89,14 +94,24 @@ def main() -> dict:
     annual.append({"admission_year": "Total", "warm_unweighted": top_three[2], "warm_weighted": top_three[3],
                    "cold_unweighted": top_three[4], "cold_weighted": top_three[5],
                    "unique_unweighted": top_three[0], "unique_weighted": top_three[1]})
+    denominators = [{"admission_year": year, "unweighted_all_adult_hospitalizations": n,
+                     "weighted_all_adult_hospitalizations": weighted}
+                    for year, n, weighted in denominator_raw]
+    denominators.append({"admission_year": "Total",
+                         "unweighted_all_adult_hospitalizations": sum(r["unweighted_all_adult_hospitalizations"] for r in denominators),
+                         "weighted_all_adult_hospitalizations": sum(r["weighted_all_adult_hospitalizations"] for r in denominators)})
     write_csv("primary_diagnosis_cohort_yield.csv", primary)
     write_csv("top_three_diagnosis_cohort_yield.csv", expanded)
     write_csv("top_three_cohort_yield_by_year.csv", annual)
+    write_csv("all_adult_hospitalizations_by_year.csv", denominators)
     report = ["# Warm and Cold AIHA — NIS 2020–2022", "",
               "## Preliminary cohort definition", "",
               "Population: all adult NIS hospitalizations (`AGE >= 18`) from 2020 through 2022. Warm AIHA is exact normalized `D59.11`; cold AIHA is exact normalized `D59.12`.", "",
-              "## Primary-diagnosis definition", "",
-              "| Phenotype | Unweighted hospitalizations | DISCWT-weighted hospitalizations |", "| --- | ---: | ---: |"]
+              "## All Adult Hospitalization Denominators", "",
+              "| Admission year | Unweighted adult hospitalizations | DISCWT-weighted adult hospitalizations |", "| --- | ---: | ---: |"]
+    report.extend(f'| {r["admission_year"]} | {r["unweighted_all_adult_hospitalizations"]:,} | {r["weighted_all_adult_hospitalizations"]:,} |' for r in denominators)
+    report.extend(["", "## Primary-diagnosis definition", "",
+              "| Phenotype | Unweighted hospitalizations | DISCWT-weighted hospitalizations |", "| --- | ---: | ---: |"])
     report.extend(f'| {r["phenotype"]} | {r["unweighted_hospitalizations"]:,} | {r["weighted_hospitalizations"]:,} |' for r in primary)
     report.extend(["", "## Expanded definition: first three diagnosis positions", "",
                    "| Phenotype | Unweighted hospitalizations | DISCWT-weighted hospitalizations |", "| --- | ---: | ---: |"])
@@ -107,7 +122,8 @@ def main() -> dict:
     report.extend(f'| {r["admission_year"]} | {r["warm_unweighted"]:,} | {r["warm_weighted"]:,} | {r["cold_unweighted"]:,} | {r["cold_weighted"]:,} | {r["unique_unweighted"]:,} | {r["unique_weighted"]:,} |' for r in annual)
     report.extend(["", "These preliminary counts are hospitalization-based and do not identify unique patients. The definitive position rule and exclusion criteria remain to be specified in the study protocol.", ""])
     REPORT_PATH.write_text("\n".join(report), encoding="utf-8")
-    summary = {"project": "Warm and Cold AIHA NIS 2020–2022", "primary": primary, "top_three": expanded,
+    summary = {"project": "Warm and Cold AIHA NIS 2020–2022", "all_adult_denominators": denominators,
+               "primary": primary, "top_three": expanded,
                "annual_top_three": annual, "report": str(REPORT_PATH), "output_directory": str(OUTPUT_DIR)}
     (OUTPUT_DIR / "cohort_yield_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2)); return summary
