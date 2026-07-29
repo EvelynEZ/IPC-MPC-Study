@@ -47,7 +47,9 @@ def proportion_smd(cold: float, warm: float) -> float:
     return 0.0 if variance <= 0 else (cold - warm) / math.sqrt(variance)
 
 
-def build_frame() -> pd.DataFrame:
+def build_frame(table_name: str = "aiha_cohort") -> pd.DataFrame:
+    if table_name not in {"aiha_cohort", "aiha_sensitivity_cohort"}:
+        raise ValueError(f"Unsupported cohort table: {table_name}")
     connection = duckdb.connect(str(DATABASE), read_only=True)
     subtype_rules = {rule["id"]: rule for rule in json.loads(HM_CONFIG.read_text())["subtypes"]}
     lymphoid_conditions = [code_match_sql("code", subtype_rules[subtype]) for subtype in
@@ -61,7 +63,7 @@ def build_frame() -> pd.DataFrame:
     weights = dict(CCI_WEIGHTS); weights.update({"cancer": 2, "metastatic": 6})
     flags = [f"list_contains(list_transform(diagnosis_codes, code -> {component_condition(prefixes)}), TRUE) AS {name}"
              for name, prefixes in components.items()]
-    connection.execute("CREATE TEMP TABLE flags AS SELECT *, " + ", ".join(flags) + " FROM aiha_cohort")
+    connection.execute("CREATE TEMP TABLE flags AS SELECT *, " + ", ".join(flags) + f" FROM {table_name}")
     terms = []
     for name, weight in weights.items():
         present = "diab AND NOT diabwc" if name == "diab" else "mld AND NOT msld" if name == "mld" else "cancer AND NOT metastatic" if name == "cancer" else name

@@ -400,3 +400,25 @@ Binary outcomes are unweighted n (%); LOS is unweighted mean (SD). Overall p-val
 | Total cohort denominator | n (100%) | 679 (100.00%) | 132 (100.00%) | 444 (100.00%) | 124 (100.00%) | 1,379 (100.00%) | — | — |
 
 Acute thrombosis is `ANY_ACUTE_THROMBOSIS`, the union of the previously defined acute venous and arterial thrombosis phenotypes. Acute respiratory failure uses `J96.0*` after code normalization. Diagnoses are co-documented and do not establish temporal ordering.
+<!-- ANY_DIAGNOSIS_SENSITIVITY -->
+# Sensitivity Analysis: AIHA in Any Diagnosis Position
+
+The sensitivity cohort includes adult NIS hospitalizations from 2020–2022 with normalized `D59.11` or `D59.12` in any of DX1–DX40. Hospitalizations containing both warm and cold codes anywhere were excluded. This cohort is stored separately and does not replace the primary DX1–DX3 cohort.
+
+## Sensitivity cohort
+
+| Cohort | Unweighted hospitalizations | DISCWT-weighted hospitalizations | Unweighted deaths |
+| --- | ---: | ---: | ---: |
+| Warm AIHA | 1,391 | 6,955 | 88 |
+| Cold AIHA | 1,201 | 6,005 | 73 |
+| Total sensitivity cohort | 2,592 | 12,960 | 161 |
+
+## Repeated primary adjusted mortality analysis
+
+The logistic-regression specification is identical to the primary analysis: mortality is the outcome; warm AIHA is the exposure reference; and adjustment includes continuous age, sex, race/ethnicity, associated lymphoid malignancy, hospital region, teaching status, bed size, and continuous CCI.
+
+| Exposure comparison | Adjusted odds ratio | 95% CI | P-value |
+| --- | ---: | ---: | ---: |
+| Cold AIHA versus warm AIHA | 0.842 | 0.600–1.181 | 0.318 |
+
+As in the primary cohort, `DISCWT` is constant at 5, so coefficient estimates are unchanged by weighting. Each sampled discharge is used once for model-based variance estimation.
