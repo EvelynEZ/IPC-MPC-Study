@@ -174,3 +174,118 @@ Warm AIHA is the reference group. Diagnoses were identified in any of the 40 dia
 | Total cohort denominator | — | 811 | 4,055 (100.00%) | 568 | 2,840 (100.00%) | — | — | — |
 
 P-values are two-sided Pearson chi-square tests comparing warm and cold AIHA. Diagnoses are co-documented during the hospitalization and do not establish temporal ordering.
+<!-- ALL_VARIABLES_UNWEIGHTED -->
+# Unweighted Comparison of Warm Versus Cold AIHA Hospitalizations
+
+This table reports the actual sampled NIS hospitalization records without applying `DISCWT`. Warm AIHA is the reference group. Continuous variables are shown as unweighted mean (SD); categorical and binary variables are shown as unweighted n (%).
+
+P-values are unweighted Welch t-tests for continuous variables, overall Pearson chi-square tests for multilevel categorical variables, and Pearson chi-square tests for binary diagnoses. A p-value shown on the first level of a multilevel variable applies to the variable overall.
+
+## Demographic and clinical characteristics
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Age, years | Mean (SD) | 60.15 (19.92) | 70.96 (15.70) | — | <0.001 | Welch t-test |
+| Age group | 18–59 | 337 (41.55%) | 101 (17.78%) | -23.77 | <0.001 | Pearson chi-square |
+|  | ≥60 | 474 (58.45%) | 467 (82.22%) | 23.77 |  |  |
+| Sex | Male | 392 (48.34%) | 210 (36.97%) | -11.36 | <0.001 | Pearson chi-square |
+|  | Female | 419 (51.66%) | 358 (63.03%) | 11.36 |  |  |
+|  | Missing | 0 (0.00%) | 0 (0.00%) | 0.00 |  |  |
+| Race/ethnicity | White | 527 (64.98%) | 401 (70.60%) | 5.62 | <0.001 | Pearson chi-square |
+|  | Black | 83 (10.23%) | 54 (9.51%) | -0.73 |  |  |
+|  | Hispanic | 130 (16.03%) | 52 (9.15%) | -6.87 |  |  |
+|  | Asian/Pacific Islander | 27 (3.33%) | 29 (5.11%) | 1.78 |  |  |
+|  | Native American | 3 (0.37%) | 0 (0.00%) | -0.37 |  |  |
+|  | Other | 18 (2.22%) | 25 (4.40%) | 2.18 |  |  |
+|  | Missing | 23 (2.84%) | 7 (1.23%) | -1.60 |  |  |
+| Primary payer | Medicare | 397 (48.95%) | 397 (69.89%) | 20.94 | <0.001 | Pearson chi-square |
+|  | Medicaid | 118 (14.55%) | 33 (5.81%) | -8.74 |  |  |
+|  | Private insurance | 247 (30.46%) | 120 (21.13%) | -9.33 |  |  |
+|  | Self-pay | 34 (4.19%) | 11 (1.94%) | -2.26 |  |  |
+|  | No charge | 1 (0.12%) | 1 (0.18%) | 0.05 |  |  |
+|  | Other | 13 (1.60%) | 5 (0.88%) | -0.72 |  |  |
+|  | Missing | 1 (0.12%) | 1 (0.18%) | 0.05 |  |  |
+| ZIP-code income quartile | 0–25th percentile | 194 (23.92%) | 115 (20.25%) | -3.67 | 0.275 | Pearson chi-square |
+|  | 26th–50th percentile | 187 (23.06%) | 150 (26.41%) | 3.35 |  |  |
+|  | 51st–75th percentile | 222 (27.37%) | 149 (26.23%) | -1.14 |  |  |
+|  | 76th–100th percentile | 198 (24.41%) | 145 (25.53%) | 1.11 |  |  |
+|  | Missing | 10 (1.23%) | 9 (1.58%) | 0.35 |  |  |
+
+## Hospital characteristics
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Hospital region | Northeast | 172 (21.21%) | 123 (21.65%) | 0.45 | 0.024 | Pearson chi-square |
+|  | Midwest | 202 (24.91%) | 124 (21.83%) | -3.08 |  |  |
+|  | South | 261 (32.18%) | 223 (39.26%) | 7.08 |  |  |
+|  | West | 176 (21.70%) | 98 (17.25%) | -4.45 |  |  |
+|  | Unknown | 0 (0.00%) | 0 (0.00%) | 0.00 |  |  |
+| Hospital bed size | Small | 118 (14.55%) | 101 (17.78%) | 3.23 | 0.030 | Pearson chi-square |
+|  | Medium | 227 (27.99%) | 181 (31.87%) | 3.88 |  |  |
+|  | Large | 466 (57.46%) | 286 (50.35%) | -7.11 |  |  |
+|  | Unknown | 0 (0.00%) | 0 (0.00%) | 0.00 |  |  |
+| Hospital location/teaching status | Rural | 43 (5.30%) | 41 (7.22%) | 1.92 | 0.320 | Pearson chi-square |
+|  | Urban nonteaching | 103 (12.70%) | 67 (11.80%) | -0.90 |  |  |
+|  | Urban teaching | 665 (82.00%) | 460 (80.99%) | -1.01 |  |  |
+|  | Unknown | 0 (0.00%) | 0 (0.00%) | 0.00 |  |  |
+
+## Admission year
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Admission year | 2020 | 68 (8.38%) | 62 (10.92%) | 2.53 | 0.243 | Pearson chi-square |
+|  | 2021 | 349 (43.03%) | 246 (43.31%) | 0.28 |  |  |
+|  | 2022 | 394 (48.58%) | 260 (45.77%) | -2.81 |  |  |
+
+## Clinical characteristics and outcomes
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Charlson Comorbidity Index | Mean (SD) | 2.09 (2.16) | 2.26 (2.04) | — | 0.122 | Welch t-test |
+| Charlson category | 0 | 230 (28.36%) | 138 (24.30%) | -4.06 | 0.049 | Pearson chi-square |
+|  | 1–2 | 326 (40.20%) | 217 (38.20%) | -1.99 |  |  |
+|  | ≥3 | 255 (31.44%) | 213 (37.50%) | 6.06 |  |  |
+| Length of stay, days | Mean (SD) | 6.57 (7.65) | 5.93 (6.65) | — | 0.103 | Welch t-test |
+| In-hospital mortality | Survived | 789 (97.29%) | 551 (97.01%) | -0.28 | 0.886 | Pearson chi-square |
+|  | Died | 22 (2.71%) | 17 (2.99%) | 0.28 |  |  |
+|  | Missing | 0 (0.00%) | 0 (0.00%) | 0.00 |  |  |
+
+## Lymphoid malignancy
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Lymphoma spectrum (Hodgkin, NHL, WM/MALT) | Present | 42 (5.18%) | 89 (15.67%) | 10.49 | <0.001 | Pearson chi-square |
+| CLL/chronic leukemia group | Present | 84 (10.36%) | 35 (6.16%) | -4.20 | 0.006 | Pearson chi-square |
+| Plasma-cell neoplasms | Present | 9 (1.11%) | 5 (0.88%) | -0.23 | 0.676 | Pearson chi-square |
+| ANY_LYMPHOID_MALIGNANCY | Present | 132 (16.28%) | 124 (21.83%) | 5.55 | 0.009 | Pearson chi-square |
+
+## Acute thrombosis
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Acute pulmonary embolism | Present | 29 (3.58%) | 9 (1.58%) | -1.99 | 0.026 | Pearson chi-square |
+| Acute deep-vein thrombosis | Present | 25 (3.08%) | 17 (2.99%) | -0.09 | 0.924 | Pearson chi-square |
+| Splanchnic-vein thrombosis | Present | 5 (0.62%) | 3 (0.53%) | -0.09 | 0.832 | Pearson chi-square |
+| Other acute venous thrombosis | Present | 6 (0.74%) | 1 (0.18%) | -0.56 | 0.147 | Pearson chi-square |
+| Acute ischemic stroke | Present | 8 (0.99%) | 7 (1.23%) | 0.25 | 0.665 | Pearson chi-square |
+| Acute myocardial infarction | Present | 9 (1.11%) | 11 (1.94%) | 0.83 | 0.206 | Pearson chi-square |
+| Other acute arterial embolism or thrombosis | Present | 3 (0.37%) | 1 (0.18%) | -0.19 | 0.510 | Pearson chi-square |
+| ANY_VTE | Present | 54 (6.66%) | 24 (4.23%) | -2.43 | 0.054 | Pearson chi-square |
+| ANY_ARTERIAL_THROMBOSIS | Present | 20 (2.47%) | 19 (3.35%) | 0.88 | 0.333 | Pearson chi-square |
+| ANY_ACUTE_THROMBOSIS | Present | 71 (8.75%) | 42 (7.39%) | -1.36 | 0.365 | Pearson chi-square |
+
+## Selected complications
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Acute kidney injury | Present | 169 (20.84%) | 92 (16.20%) | -4.64 | 0.030 | Pearson chi-square |
+| Acute respiratory failure | Present | 47 (5.80%) | 27 (4.75%) | -1.04 | 0.398 | Pearson chi-square |
+| Sepsis | Present | 29 (3.58%) | 30 (5.28%) | 1.71 | 0.123 | Pearson chi-square |
+
+## Total
+
+| Characteristic | Level | Warm AIHA | Cold AIHA | Difference, pp | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Total cohort denominator | All hospitalizations | 811 (100.00%) | 568 (100.00%) | — | — | — |
+
+Lymphoid-malignancy component rows and thrombosis component rows may overlap. Composite rows count each hospitalization once. Diagnoses searched all 40 diagnosis positions.
