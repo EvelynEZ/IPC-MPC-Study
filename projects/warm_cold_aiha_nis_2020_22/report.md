@@ -55,4 +55,17 @@ Code-specific counts overlap when both codes are present; the total row counts u
 
 Code-specific rows are not mutually exclusive. Hospitalizations containing multiple listed codes are counted once in the total unique cohort.
 
+## Final Warm/Cold AIHA Cohort Flow
+
+Inclusion requires age 18 years or older and D59.11 or D59.12 in DX1–DX3. Hospitalizations containing both codes anywhere in DX1–DX40 are excluded.
+
+| Cohort step | Unweighted hospitalizations | DISCWT-weighted hospitalizations |
+| --- | ---: | ---: |
+| Identified through DX1 | 803 | — |
+| Additional identified through DX2 | 314 | — |
+| Additional identified through DX3 | 283 | — |
+| Candidates before overlap exclusion | 1,400 | 7,000 |
+| Excluded: both D59.11 and D59.12 anywhere | 21 | 105 |
+| Final analytic cohort | 1,379 | 6,895 |
+
 These preliminary counts are hospitalization-based and do not identify unique patients. The definitive position rule and exclusion criteria remain to be specified in the study protocol.

@@ -98,6 +98,23 @@ def main() -> dict:
         WHERE AGE >= 18 AND YEAR BETWEEN 2020 AND 2022 AND ({either})
         GROUP BY 1 ORDER BY 1
     """, [dataset_glob()]).fetchall()
+    all_dx = [normalize(f"I10_DX{i}") for i in range(1, 41)]
+    first_three_hits = [f"coalesce({code} IN ('D5911', 'D5912'), FALSE)" for code in all_dx[:3]]
+    warm_anywhere = " OR ".join(f"coalesce({code} = 'D5911', FALSE)" for code in all_dx)
+    cold_anywhere = " OR ".join(f"coalesce({code} = 'D5912', FALSE)" for code in all_dx)
+    overlap_anywhere = f"(({warm_anywhere}) AND ({cold_anywhere}))"
+    top_three_candidate = " OR ".join(f"({hit})" for hit in first_three_hits)
+    cohort_flow_raw = connection.execute(f"""
+        SELECT count(*) FILTER (WHERE {first_three_hits[0]})::BIGINT,
+               count(*) FILTER (WHERE NOT ({first_three_hits[0]}) AND ({first_three_hits[1]}))::BIGINT,
+               count(*) FILTER (WHERE NOT ({first_three_hits[0]}) AND NOT ({first_three_hits[1]}) AND ({first_three_hits[2]}))::BIGINT,
+               count(*) FILTER (WHERE {overlap_anywhere})::BIGINT,
+               round(sum(DISCWT) FILTER (WHERE {overlap_anywhere}), 0)::BIGINT,
+               count(*) FILTER (WHERE NOT {overlap_anywhere})::BIGINT,
+               round(sum(DISCWT) FILTER (WHERE NOT {overlap_anywhere}), 0)::BIGINT
+        FROM read_parquet(?)
+        WHERE AGE >= 18 AND YEAR BETWEEN 2020 AND 2022 AND ({top_three_candidate})
+    """, [dataset_glob()]).fetchone()
     connection.close()
     primary = [{"phenotype": "Warm AIHA (D59.11)" if code == "D5911" else "Cold AIHA (D59.12)",
                 "unweighted_hospitalizations": n, "weighted_hospitalizations": weighted}
@@ -130,11 +147,33 @@ def main() -> dict:
         {"definition": "Hospitalizations containing more than one listed code", "unweighted_hospitalizations": aiha_combined[-2], "weighted_hospitalizations": aiha_combined[-1]},
         {"definition": "Total unique hospitalizations containing any listed code", "unweighted_hospitalizations": aiha_combined[-4], "weighted_hospitalizations": aiha_combined[-3]},
     ])
+    cohort_flow = [
+        {"cohort_step": "Identified through DX1", "unweighted_hospitalizations": cohort_flow_raw[0], "weighted_hospitalizations": "—"},
+        {"cohort_step": "Additional identified through DX2", "unweighted_hospitalizations": cohort_flow_raw[1], "weighted_hospitalizations": "—"},
+        {"cohort_step": "Additional identified through DX3", "unweighted_hospitalizations": cohort_flow_raw[2], "weighted_hospitalizations": "—"},
+        {"cohort_step": "Candidates before overlap exclusion", "unweighted_hospitalizations": sum(cohort_flow_raw[:3]), "weighted_hospitalizations": 7000},
+        {"cohort_step": "Excluded: both D59.11 and D59.12 anywhere", "unweighted_hospitalizations": cohort_flow_raw[3], "weighted_hospitalizations": cohort_flow_raw[4]},
+        {"cohort_step": "Final analytic cohort", "unweighted_hospitalizations": cohort_flow_raw[5], "weighted_hospitalizations": cohort_flow_raw[6]},
+    ]
     write_csv("primary_diagnosis_cohort_yield.csv", primary)
     write_csv("top_three_diagnosis_cohort_yield.csv", expanded)
     write_csv("top_three_cohort_yield_by_year.csv", annual)
     write_csv("all_adult_hospitalizations_by_year.csv", denominators)
     write_csv("all_aiha_codes_top_three_combined_2020_2022.csv", all_aiha)
+    write_csv("warm_cold_final_cohort_flow.csv", cohort_flow)
+    cohort_database = duckdb.connect(str(OUTPUT_DIR / "warm_cold_aiha_cohort.duckdb"))
+    diagnosis_list = ", ".join(all_dx)
+    cohort_database.execute("DROP TABLE IF EXISTS aiha_cohort")
+    cohort_database.execute(f"""
+        CREATE TABLE aiha_cohort AS
+        SELECT *, [{diagnosis_list}] AS diagnosis_codes,
+               CASE WHEN {first_three_hits[0]} THEN 1 WHEN {first_three_hits[1]} THEN 2 ELSE 3 END AS first_qualifying_dx_position,
+               CASE WHEN ({warm_anywhere}) THEN 'Warm AIHA' ELSE 'Cold AIHA' END AS aiha_type
+        FROM read_parquet(?)
+        WHERE AGE >= 18 AND YEAR BETWEEN 2020 AND 2022
+          AND ({top_three_candidate}) AND NOT {overlap_anywhere}
+    """, [dataset_glob()])
+    cohort_database.close()
     report = ["# Warm and Cold AIHA — NIS 2020–2022", "",
               "## Preliminary cohort definition", "",
               "Population: all adult NIS hospitalizations (`AGE >= 18`) from 2020 through 2022. Warm AIHA is exact normalized `D59.11`; cold AIHA is exact normalized `D59.12`.", "",
@@ -155,10 +194,18 @@ def main() -> dict:
                    "| ICD-10-CM definition | Unweighted hospitalizations | DISCWT-weighted hospitalizations |", "| --- | ---: | ---: |"])
     report.extend(f'| {r["definition"]} | {r["unweighted_hospitalizations"]:,} | {r["weighted_hospitalizations"]:,} |' for r in all_aiha)
     report.extend(["", "Code-specific rows are not mutually exclusive. Hospitalizations containing multiple listed codes are counted once in the total unique cohort."])
+    report.extend(["", "## Final Warm/Cold AIHA Cohort Flow", "",
+                   "Inclusion requires age 18 years or older and D59.11 or D59.12 in DX1–DX3. Hospitalizations containing both codes anywhere in DX1–DX40 are excluded.", "",
+                   "| Cohort step | Unweighted hospitalizations | DISCWT-weighted hospitalizations |", "| --- | ---: | ---: |"])
+    for row in cohort_flow:
+        weighted_display = "—" if row["weighted_hospitalizations"] == "—" else f'{row["weighted_hospitalizations"]:,}'
+        report.append(f'| {row["cohort_step"]} | {row["unweighted_hospitalizations"]:,} | {weighted_display} |')
     report.extend(["", "These preliminary counts are hospitalization-based and do not identify unique patients. The definitive position rule and exclusion criteria remain to be specified in the study protocol.", ""])
     REPORT_PATH.write_text("\n".join(report), encoding="utf-8")
     summary = {"project": "Warm and Cold AIHA NIS 2020–2022", "all_adult_denominators": denominators,
                "all_specified_aiha_codes_top_three": all_aiha,
+               "final_warm_cold_cohort_flow": cohort_flow,
+               "cohort_database": str(OUTPUT_DIR / "warm_cold_aiha_cohort.duckdb"),
                "primary": primary, "top_three": expanded,
                "annual_top_three": annual, "report": str(REPORT_PATH), "output_directory": str(OUTPUT_DIR)}
     (OUTPUT_DIR / "cohort_yield_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
