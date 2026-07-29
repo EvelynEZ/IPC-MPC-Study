@@ -20,7 +20,6 @@ from src import phase_10_decedents
 from src import phase_11_trends
 from src import bmt_shock_interaction
 from src import stratified_covariate_effects
-from src import primary_diagnosis_d5911_d5912
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -223,7 +222,6 @@ def main() -> dict[str, Any]:
         "phase_11": phase_11_trends.main(),
         "bmt_shock_interaction": bmt_shock_interaction.main(),
         "stratified_covariate_effects": stratified_covariate_effects.main(),
-        "primary_diagnosis_d5911_d5912": primary_diagnosis_d5911_d5912.main(),
     }
     summary_path = OUTPUT_ROOT / "septic_shock_pipeline_summary.json"
     summary_path.write_text(json.dumps(results, indent=2) + "\n")

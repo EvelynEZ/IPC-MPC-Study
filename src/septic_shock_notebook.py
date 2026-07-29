@@ -163,8 +163,5 @@ def show_step(step: int) -> None:
     elif step == 22:
         path = OUT / "stratified_covariate_effects/stratified_covariate_effects_report.md"
         display(Markdown(path.read_text()))
-    elif step == 23:
-        path = OUT / "primary_diagnosis_d5911_d5912/primary_diagnosis_counts_report.md"
-        display(Markdown(path.read_text()))
     else:
-        raise ValueError("Step must be from 1 through 23.")
+        raise ValueError("Step must be from 1 through 22.")
