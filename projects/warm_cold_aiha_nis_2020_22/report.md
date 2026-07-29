@@ -382,3 +382,21 @@ Heteroskedasticity-consistent HC3 standard errors were used because length of st
 | Age, per year | 0.001 | -0.022 to 0.023 | 0.935 |
 | Associated lymphoid malignancy: yes vs no | -0.120 | -1.197 to 0.957 | 0.827 |
 | Charlson Comorbidity Index, per point | 0.337 | 0.080 to 0.595 | 0.010 |
+<!-- LYMPHOID_STRATIFIED_OUTCOMES -->
+# Unweighted Outcomes by AIHA Subtype and Lymphoid-Malignancy Status
+
+This table uses sampled NIS hospitalization records without `DISCWT`. Associated lymphoid malignancy is the previously defined union of lymphoma, CLL/chronic leukemia, and plasma-cell neoplasms identified across all 40 diagnosis positions. Warm and cold AIHA remain mutually exclusive.
+
+Binary outcomes are unweighted n (%); LOS is unweighted mean (SD). Overall p-values compare all four groups using Pearson chi-square tests or Welch's unequal-variance ANOVA.
+
+| Outcome | Summary | Warm without lymphoid malignancy | Warm with lymphoid malignancy | Cold without lymphoid malignancy | Cold with lymphoid malignancy | Total cohort | Overall p-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Any acute thrombosis | n (%) | 65 (9.57%) | 6 (4.55%) | 35 (7.88%) | 7 (5.65%) | 113 (8.19%) | 0.159 | Pearson chi-square |
+| Acute kidney injury | n (%) | 136 (20.03%) | 33 (25.00%) | 70 (15.77%) | 22 (17.74%) | 261 (18.93%) | 0.082 | Pearson chi-square |
+| Sepsis | n (%) | 26 (3.83%) | 3 (2.27%) | 24 (5.41%) | 6 (4.84%) | 59 (4.28%) | 0.376 | Pearson chi-square |
+| Acute respiratory failure | n (%) | 44 (6.48%) | 3 (2.27%) | 22 (4.95%) | 5 (4.03%) | 74 (5.37%) | 0.193 | Pearson chi-square |
+| Length of stay, days | Mean (SD) | 6.57 (7.83) | 6.52 (6.64) | 5.62 (6.55) | 7.06 (6.91) | 6.31 (7.26) | 0.068 | Welch ANOVA |
+| In-hospital mortality | n (%) | 17 (2.50%) | 5 (3.79%) | 12 (2.70%) | 5 (4.03%) | 39 (2.83%) | 0.710 | Pearson chi-square |
+| Total cohort denominator | n (100%) | 679 (100.00%) | 132 (100.00%) | 444 (100.00%) | 124 (100.00%) | 1,379 (100.00%) | — | — |
+
+Acute thrombosis is `ANY_ACUTE_THROMBOSIS`, the union of the previously defined acute venous and arterial thrombosis phenotypes. Acute respiratory failure uses `J96.0*` after code normalization. Diagnoses are co-documented and do not establish temporal ordering.
