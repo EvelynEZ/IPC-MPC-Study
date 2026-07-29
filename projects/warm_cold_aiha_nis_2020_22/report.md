@@ -161,3 +161,16 @@ Warm AIHA is the reference group. Every phenotype searches all 40 diagnosis posi
 | ANY_ARTERIAL_THROMBOSIS | 20 | 100 (2.47%) | 19 | 95 (3.35%) | 0.88 | 0.052 | 0.333 | 0.608 |
 | ANY_ACUTE_THROMBOSIS | 71 | 355 (8.75%) | 42 | 210 (7.39%) | -1.36 | -0.05 | 0.365 | 0.608 |
 | Total cohort denominator | 811 | 4,055 (100.00%) | 568 | 2,840 (100.00%) | — | — | — | — |
+<!-- SELECTED_COMPLICATIONS -->
+# Selected Complications by AIHA Type
+
+Warm AIHA is the reference group. Diagnoses were identified in any of the 40 diagnosis positions after removing decimal points and spaces and converting codes to uppercase. Acute respiratory failure uses ICD-10-CM `J96.0*` (`J960*` normalized); `A960` was treated as a typographical error because it does not denote acute respiratory failure.
+
+| Complication | ICD-10-CM | Warm unweighted n | Warm weighted n (%) | Cold unweighted n | Cold weighted n (%) | Difference, pp | SMD | P-value |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Acute kidney injury | N17* | 169 | 845 (20.84%) | 92 | 460 (16.20%) | -4.64 | -0.12 | 0.030 |
+| Acute respiratory failure | J960* | 47 | 235 (5.80%) | 27 | 135 (4.75%) | -1.04 | -0.047 | 0.398 |
+| Sepsis | A41* | 29 | 145 (3.58%) | 30 | 150 (5.28%) | 1.71 | 0.083 | 0.123 |
+| Total cohort denominator | — | 811 | 4,055 (100.00%) | 568 | 2,840 (100.00%) | — | — | — |
+
+P-values are two-sided Pearson chi-square tests comparing warm and cold AIHA. Diagnoses are co-documented during the hospitalization and do not establish temporal ordering.
