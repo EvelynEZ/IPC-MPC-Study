@@ -19,10 +19,12 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from src.phase_5_cci_los_mortality import CCI_COMPONENTS, CCI_WEIGHTS, component_condition
+from src.phase_1_2 import code_match_sql
 
 
 OUTPUT_DIR = PROJECT_DIR / "outputs"
 DATABASE = OUTPUT_DIR / "warm_cold_aiha_cohort.duckdb"
+HM_CONFIG = REPO_ROOT / "config/hm_phenotype_v0_1.json"
 
 CANCER_PREFIXES = ("C00", "C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20", "C21", "C22", "C23", "C24", "C25", "C26", "C30", "C31", "C32", "C33", "C34", "C37", "C38", "C39", "C40", "C41", "C43", "C45", "C46", "C47", "C48", "C49", "C50", "C51", "C52", "C53", "C54", "C55", "C56", "C57", "C58", "C60", "C61", "C62", "C63", "C64", "C65", "C66", "C67", "C68", "C69", "C70", "C71", "C72", "C73", "C74", "C75", "C76", "C81", "C82", "C83", "C84", "C85", "C88", "C90", "C91", "C92", "C93", "C94", "C95", "C96", "C97")
 METASTATIC_PREFIXES = ("C77", "C78", "C79", "C80")
@@ -47,6 +49,13 @@ def proportion_smd(cold: float, warm: float) -> float:
 
 def build_frame() -> pd.DataFrame:
     connection = duckdb.connect(str(DATABASE), read_only=True)
+    subtype_rules = {rule["id"]: rule for rule in json.loads(HM_CONFIG.read_text())["subtypes"]}
+    lymphoid_conditions = [code_match_sql("code", subtype_rules[subtype]) for subtype in
+                           ("lymphoma", "cll_chronic_leukemia", "myeloma_plasma_cell")]
+    lymphoid_expression = " OR ".join(
+        f"list_contains(list_transform(diagnosis_codes, code -> {condition}), TRUE)"
+        for condition in lymphoid_conditions
+    )
     components = dict(CCI_COMPONENTS)
     components.update({"cancer": CANCER_PREFIXES, "metastatic": METASTATIC_PREFIXES})
     weights = dict(CCI_WEIGHTS); weights.update({"cancer": 2, "metastatic": 6})
@@ -59,6 +68,7 @@ def build_frame() -> pd.DataFrame:
         terms.append(f"CASE WHEN {present} THEN {weight} ELSE 0 END")
     frame = connection.execute("""
         SELECT aiha_type, DISCWT::DOUBLE AS weight, AGE::DOUBLE AS age, LOS::DOUBLE AS los,
+               CASE WHEN (""" + lymphoid_expression + """) THEN 1 ELSE 0 END AS associated_lymphoid_malignancy,
                DIED::INTEGER AS died,
                CASE WHEN AGE < 60 THEN '18–59' ELSE '≥60' END AS age_group,
                CASE FEMALE WHEN 0 THEN 'Male' WHEN 1 THEN 'Female' ELSE 'Missing' END AS sex,

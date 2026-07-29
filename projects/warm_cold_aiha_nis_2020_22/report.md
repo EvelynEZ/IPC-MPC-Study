@@ -289,3 +289,50 @@ P-values are unweighted Welch t-tests for continuous variables, overall Pearson 
 | Total cohort denominator | All hospitalizations | 811 (100.00%) | 568 (100.00%) | — | — | — |
 
 Lymphoid-malignancy component rows and thrombosis component rows may overlap. Composite rows count each hospitalization once. Diagnoses searched all 40 diagnosis positions.
+<!-- ADJUSTED_MORTALITY_MODEL -->
+# Adjusted Association Between AIHA Subtype and In-Hospital Mortality
+
+A multivariable logistic-regression model used in-hospital mortality (`DIED=1`) as the outcome and AIHA subtype as the primary exposure. Warm AIHA was the reference group. The model adjusted for continuous age, sex, race/ethnicity, associated lymphoid malignancy, hospital region, hospital teaching status, hospital bed size, and continuous Charlson Comorbidity Index. Teaching status was coded as urban teaching versus nonteaching; the nonteaching category combines rural and urban nonteaching hospitals.
+
+## Primary exposure result
+
+| Exposure comparison | Adjusted odds ratio | 95% CI | P-value |
+| --- | ---: | ---: | ---: |
+| Cold AIHA versus warm AIHA | 1.199 | 0.598–2.401 | 0.609 |
+
+## Model diagnostics
+
+| Measure | Value |
+| --- | ---: |
+| Analysis hospitalizations | 1,379 |
+| Deaths | 39 |
+| Warm AIHA deaths / hospitalizations | 22 / 811 |
+| Cold AIHA deaths / hospitalizations | 17 / 568 |
+| Estimated model parameters | 18 |
+| Model converged | True |
+
+`DISCWT` is 5 for every record in this 2020–2022 analytic cohort. Therefore weighted and unweighted coefficient estimates are identical; the model uses each sampled hospitalization once so that model-based standard errors are not artificially reduced by treating the weight as replicated observations.
+
+Interpret cautiously: only 39 deaths were observed relative to the number of adjustment parameters, so the estimate may be imprecise and the model is vulnerable to sparse-data overfitting.
+
+## Full adjusted model
+
+| Covariate contrast | Adjusted odds ratio | 95% CI | P-value |
+| --- | ---: | ---: | ---: |
+| Cold AIHA vs warm AIHA | 1.199 | 0.598–2.401 | 0.609 |
+| Sex: Female | 0.420 | 0.207–0.853 | 0.016 |
+| Race/ethnicity: Asian/Pacific Islander | 0.420 | 0.053–3.316 | 0.410 |
+| Race/ethnicity: Black | 0.263 | 0.034–2.026 | 0.200 |
+| Race/ethnicity: Hispanic | 0.827 | 0.268–2.553 | 0.741 |
+| Race/ethnicity: Missing | 5.515 | 1.373–22.159 | 0.016 |
+| Race/ethnicity: Native American | 22.792 | 0.982–529.200 | 0.051 |
+| Race/ethnicity: Other | 1.454 | 0.316–6.691 | 0.631 |
+| Hospital region: Midwest | 1.184 | 0.346–4.044 | 0.788 |
+| Hospital region: South | 1.739 | 0.600–5.033 | 0.308 |
+| Hospital region: West | 3.264 | 1.111–9.588 | 0.031 |
+| Hospital teaching status: Teaching | 2.994 | 0.895–10.015 | 0.075 |
+| Hospital bed size: Large | 1.165 | 0.418–3.248 | 0.770 |
+| Hospital bed size: Medium | 1.478 | 0.506–4.322 | 0.475 |
+| Age, per year | 1.017 | 0.993–1.042 | 0.171 |
+| Associated lymphoid malignancy: yes vs no | 1.030 | 0.471–2.253 | 0.941 |
+| Charlson Comorbidity Index, per point | 1.159 | 1.001–1.343 | 0.048 |
