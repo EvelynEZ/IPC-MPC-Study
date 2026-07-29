@@ -41,4 +41,18 @@ Code-specific counts overlap when both codes are present; the total row counts u
 | 2022 | 403 | 2,015 | 265 | 1,325 | 666 | 3,330 |
 | Total | 827 | 4,135 | 576 | 2,880 | 1,400 | 7,000 |
 
+## All Specified AIHA Codes in the First Three Diagnosis Positions, 2020–2022 Combined
+
+| ICD-10-CM definition | Unweighted hospitalizations | DISCWT-weighted hospitalizations |
+| --- | ---: | ---: |
+| D59.10 — Autoimmune hemolytic anemia, unspecified | 1,758 | 8,790 |
+| D59.11 — Warm autoimmune hemolytic anemia | 827 | 4,135 |
+| D59.12 — Cold autoimmune hemolytic anemia | 576 | 2,880 |
+| D59.13 — Mixed-type autoimmune hemolytic anemia | 46 | 230 |
+| D59.19 — Other autoimmune hemolytic anemia | 237 | 1,185 |
+| Hospitalizations containing more than one listed code | 13 | 65 |
+| Total unique hospitalizations containing any listed code | 3,431 | 17,155 |
+
+Code-specific rows are not mutually exclusive. Hospitalizations containing multiple listed codes are counted once in the total unique cohort.
+
 These preliminary counts are hospitalization-based and do not identify unique patients. The definitive position rule and exclusion criteria remain to be specified in the study protocol.
