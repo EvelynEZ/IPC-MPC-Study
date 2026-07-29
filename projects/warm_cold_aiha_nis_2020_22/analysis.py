@@ -15,6 +15,8 @@ PROJECT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PROJECT_DIR.parents[1]
 OUTPUT_DIR = PROJECT_DIR / "outputs"
 REPORT_PATH = PROJECT_DIR / "report.md"
+AIHA_REFERENCE_GROUP = "Warm AIHA"
+AIHA_COMPARISON_GROUP = "Cold AIHA"
 
 
 def normalize(column: str) -> str:
@@ -177,6 +179,7 @@ def main() -> dict:
     report = ["# Warm and Cold AIHA — NIS 2020–2022", "",
               "## Preliminary cohort definition", "",
               "Population: all adult NIS hospitalizations (`AGE >= 18`) from 2020 through 2022. Warm AIHA is exact normalized `D59.11`; cold AIHA is exact normalized `D59.12`.", "",
+              "**Regression reference category:** Warm AIHA. All future regression coefficients and odds ratios for AIHA type will compare cold AIHA with warm AIHA unless explicitly labeled otherwise.", "",
               "## All Adult Hospitalization Denominators", "",
               "| Admission year | Unweighted adult hospitalizations | DISCWT-weighted adult hospitalizations |", "| --- | ---: | ---: |"]
     report.extend(f'| {r["admission_year"]} | {r["unweighted_all_adult_hospitalizations"]:,} | {r["weighted_all_adult_hospitalizations"]:,} |' for r in denominators)
@@ -202,7 +205,10 @@ def main() -> dict:
         report.append(f'| {row["cohort_step"]} | {row["unweighted_hospitalizations"]:,} | {weighted_display} |')
     report.extend(["", "These preliminary counts are hospitalization-based and do not identify unique patients. The definitive position rule and exclusion criteria remain to be specified in the study protocol.", ""])
     REPORT_PATH.write_text("\n".join(report), encoding="utf-8")
-    summary = {"project": "Warm and Cold AIHA NIS 2020–2022", "all_adult_denominators": denominators,
+    summary = {"project": "Warm and Cold AIHA NIS 2020–2022",
+               "regression_reference_group": AIHA_REFERENCE_GROUP,
+               "regression_comparison_group": AIHA_COMPARISON_GROUP,
+               "all_adult_denominators": denominators,
                "all_specified_aiha_codes_top_three": all_aiha,
                "final_warm_cold_cohort_flow": cohort_flow,
                "cohort_database": str(OUTPUT_DIR / "warm_cold_aiha_cohort.duckdb"),

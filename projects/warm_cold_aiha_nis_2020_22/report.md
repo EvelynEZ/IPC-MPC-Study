@@ -4,6 +4,8 @@
 
 Population: all adult NIS hospitalizations (`AGE >= 18`) from 2020 through 2022. Warm AIHA is exact normalized `D59.11`; cold AIHA is exact normalized `D59.12`.
 
+**Regression reference category:** Warm AIHA. All future regression coefficients and odds ratios for AIHA type will compare cold AIHA with warm AIHA unless explicitly labeled otherwise.
+
 ## All Adult Hospitalization Denominators
 
 | Admission year | Unweighted adult hospitalizations | DISCWT-weighted adult hospitalizations |

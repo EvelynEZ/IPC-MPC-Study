@@ -10,6 +10,7 @@ This project is isolated from the IPC-MPC septic-shock study while using the sam
 - Two definitions are reported: code in the primary diagnosis position and code in any of the first three diagnosis positions.
 - Each hospitalization is counted once in combined estimates even if both codes appear.
 - National estimates use `DISCWT`.
+- Regression reference group: **Warm AIHA**. Cold-AIHA coefficients and odds ratios will therefore be interpreted relative to warm AIHA unless explicitly stated otherwise.
 
 Double-click `launch_notebook.command`, then choose **Run → Run All Cells**. Generated CSV and JSON files are written only to this project's `outputs/` directory. The report-facing Markdown file is `report.md`.
 
