@@ -127,3 +127,17 @@ The Charlson Comorbidity Index uses all diagnosis positions, standard Quan ICD-1
 |  | Died | 22 | 110 (2.71%) | 17 | 85 (2.99%) | 0.28 | 0.017 |  |  |
 |  | Missing | 0 | 0 (0.00%) | 0 | 0 (0.00%) | 0.0 | 0.0 |  |  |
 | Total | All final-cohort hospitalizations | 811 | 4,055 | 568 | 2,840 | — | — | — | — |
+<!-- LYMPHOID_MALIGNANCY -->
+# Any Lymphoid Malignancy by AIHA Type
+
+Warm AIHA is the reference group. The phenotype searches all 40 diagnosis positions and reuses the prior HM project’s lymphoma, CLL/chronic-leukemia, and plasma-cell inclusion and exclusion rules.
+
+Component rows can overlap. `ANY_LYMPHOID_MALIGNANCY` is their union and counts each hospitalization once.
+
+| Malignancy definition | Warm unweighted n | Warm weighted n (%) | Cold unweighted n | Cold weighted n (%) | Difference, pp | SMD | P-value |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Lymphoma spectrum (Hodgkin, NHL, WM/MALT) | 42 | 210 (5.18%) | 89 | 445 (15.67%) | 10.49 | 0.348 | <0.001 |
+| CLL/chronic leukemia group | 84 | 420 (10.36%) | 35 | 175 (6.16%) | -4.2 | -0.153 | 0.006 |
+| Plasma-cell neoplasms | 9 | 45 (1.11%) | 5 | 25 (0.88%) | -0.23 | -0.023 | 0.676 |
+| ANY_LYMPHOID_MALIGNANCY | 132 | 660 (16.28%) | 124 | 620 (21.83%) | 5.55 | 0.142 | 0.009 |
+| Total cohort denominator | 811 | 4,055 (100.00%) | 568 | 2,840 (100.00%) | — | — | — |
