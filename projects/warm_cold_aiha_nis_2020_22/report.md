@@ -71,3 +71,59 @@ Inclusion requires age 18 years or older and D59.11 or D59.12 in DX1–DX3. Hosp
 | Final analytic cohort | 1,379 | 6,895 |
 
 These preliminary counts are hospitalization-based and do not identify unique patients. The definitive position rule and exclusion criteria remain to be specified in the study protocol.
+<!-- BASELINE_CHARACTERISTICS -->
+# Warm Versus Cold AIHA: Baseline Characteristics
+
+Warm AIHA is the reference group. Percentages, means, standard deviations, and displayed weighted counts use `DISCWT`. P-values are Welch tests for continuous variables and overall Pearson chi-square tests for categorical variables; missing levels are excluded from categorical tests.
+
+The Charlson Comorbidity Index uses all diagnosis positions, standard Quan ICD-10 components and weights, cancer/metastatic-cancer and diabetes/liver hierarchy, and no age points.
+
+| Characteristic | Level | Warm unweighted n | Warm weighted summary | Cold unweighted n | Cold weighted summary | Difference, pp | SMD | P-value | Test |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Age, years | Mean (SD) | 811 | 60.15 (19.90) | 568 | 70.96 (15.69) | — | 0.603 | <0.001 | Welch t-test |
+| Charlson Comorbidity Index | Mean (SD) | 811 | 2.09 (2.16) | 568 | 2.26 (2.04) | — | 0.084 | 0.122 | Welch t-test |
+| Length of stay, days | Mean (SD) | 811 | 6.57 (7.64) | 568 | 5.93 (6.64) | — | -0.088 | 0.103 | Welch t-test |
+| Age group | 18–59 | 337 | 1,685 (41.55%) | 101 | 505 (17.78%) | -23.77 | -0.539 | <0.001 | Pearson chi-square |
+|  | ≥60 | 474 | 2,370 (58.45%) | 467 | 2,335 (82.22%) | 23.77 | 0.539 |  |  |
+| Sex | Male | 392 | 1,960 (48.34%) | 210 | 1,050 (36.97%) | -11.36 | -0.231 | <0.001 | Pearson chi-square |
+|  | Female | 419 | 2,095 (51.66%) | 358 | 1,790 (63.03%) | 11.36 | 0.231 |  |  |
+|  | Missing | 0 | 0 (0.00%) | 0 | 0 (0.00%) | 0.0 | 0.0 |  |  |
+| Race/ethnicity | White | 527 | 2,635 (64.98%) | 401 | 2,005 (70.60%) | 5.62 | 0.12 | <0.001 | Pearson chi-square |
+|  | Black | 83 | 415 (10.23%) | 54 | 270 (9.51%) | -0.73 | -0.024 |  |  |
+|  | Hispanic | 130 | 650 (16.03%) | 52 | 260 (9.15%) | -6.87 | -0.208 |  |  |
+|  | Asian/Pacific Islander | 27 | 135 (3.33%) | 29 | 145 (5.11%) | 1.78 | 0.088 |  |  |
+|  | Native American | 3 | 15 (0.37%) | 0 | 0 (0.00%) | -0.37 | -0.086 |  |  |
+|  | Other | 18 | 90 (2.22%) | 25 | 125 (4.40%) | 2.18 | 0.122 |  |  |
+|  | Missing | 23 | 115 (2.84%) | 7 | 35 (1.23%) | -1.6 | -0.114 |  |  |
+| Primary payer | Medicare | 397 | 1,985 (48.95%) | 397 | 1,985 (69.89%) | 20.94 | 0.437 | <0.001 | Pearson chi-square |
+|  | Medicaid | 118 | 590 (14.55%) | 33 | 165 (5.81%) | -8.74 | -0.292 |  |  |
+|  | Private insurance | 247 | 1,235 (30.46%) | 120 | 600 (21.13%) | -9.33 | -0.214 |  |  |
+|  | Self-pay | 34 | 170 (4.19%) | 11 | 55 (1.94%) | -2.26 | -0.131 |  |  |
+|  | No charge | 1 | 5 (0.12%) | 1 | 5 (0.18%) | 0.05 | 0.014 |  |  |
+|  | Other | 13 | 65 (1.60%) | 5 | 25 (0.88%) | -0.72 | -0.065 |  |  |
+|  | Missing | 1 | 5 (0.12%) | 1 | 5 (0.18%) | 0.05 | 0.014 |  |  |
+| ZIP-code income quartile | 0–25th percentile | 194 | 970 (23.92%) | 115 | 575 (20.25%) | -3.67 | -0.089 | 0.275 | Pearson chi-square |
+|  | 26th–50th percentile | 187 | 935 (23.06%) | 150 | 750 (26.41%) | 3.35 | 0.078 |  |  |
+|  | 51st–75th percentile | 222 | 1,110 (27.37%) | 149 | 745 (26.23%) | -1.14 | -0.026 |  |  |
+|  | 76th–100th percentile | 198 | 990 (24.41%) | 145 | 725 (25.53%) | 1.11 | 0.026 |  |  |
+|  | Missing | 10 | 50 (1.23%) | 9 | 45 (1.58%) | 0.35 | 0.03 |  |  |
+| Hospital region | Northeast | 172 | 860 (21.21%) | 123 | 615 (21.65%) | 0.45 | 0.011 | 0.024 | Pearson chi-square |
+|  | Midwest | 202 | 1,010 (24.91%) | 124 | 620 (21.83%) | -3.08 | -0.073 |  |  |
+|  | South | 261 | 1,305 (32.18%) | 223 | 1,115 (39.26%) | 7.08 | 0.148 |  |  |
+|  | West | 176 | 880 (21.70%) | 98 | 490 (17.25%) | -4.45 | -0.112 |  |  |
+|  | Unknown | 0 | 0 (0.00%) | 0 | 0 (0.00%) | 0.0 | 0.0 |  |  |
+| Hospital bed size | Small | 118 | 590 (14.55%) | 101 | 505 (17.78%) | 3.23 | 0.088 | 0.030 | Pearson chi-square |
+|  | Medium | 227 | 1,135 (27.99%) | 181 | 905 (31.87%) | 3.88 | 0.085 |  |  |
+|  | Large | 466 | 2,330 (57.46%) | 286 | 1,430 (50.35%) | -7.11 | -0.143 |  |  |
+|  | Unknown | 0 | 0 (0.00%) | 0 | 0 (0.00%) | 0.0 | 0.0 |  |  |
+| Hospital location/teaching status | Rural | 43 | 215 (5.30%) | 41 | 205 (7.22%) | 1.92 | 0.079 | 0.320 | Pearson chi-square |
+|  | Urban nonteaching | 103 | 515 (12.70%) | 67 | 335 (11.80%) | -0.9 | -0.028 |  |  |
+|  | Urban teaching | 665 | 3,325 (82.00%) | 460 | 2,300 (80.99%) | -1.01 | -0.026 |  |  |
+|  | Unknown | 0 | 0 (0.00%) | 0 | 0 (0.00%) | 0.0 | 0.0 |  |  |
+| Charlson category | 0 | 230 | 1,150 (28.36%) | 138 | 690 (24.30%) | -4.06 | -0.092 | 0.049 | Pearson chi-square |
+|  | 1–2 | 326 | 1,630 (40.20%) | 217 | 1,085 (38.20%) | -1.99 | -0.041 |  |  |
+|  | ≥3 | 255 | 1,275 (31.44%) | 213 | 1,065 (37.50%) | 6.06 | 0.128 |  |  |
+| In-hospital mortality | Survived | 789 | 3,945 (97.29%) | 551 | 2,755 (97.01%) | -0.28 | -0.017 | 0.886 | Pearson chi-square |
+|  | Died | 22 | 110 (2.71%) | 17 | 85 (2.99%) | 0.28 | 0.017 |  |  |
+|  | Missing | 0 | 0 (0.00%) | 0 | 0 (0.00%) | 0.0 | 0.0 |  |  |
+| Total | All final-cohort hospitalizations | 811 | 4,055 | 568 | 2,840 | — | — | — | — |
