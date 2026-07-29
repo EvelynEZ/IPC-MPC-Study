@@ -141,3 +141,23 @@ Component rows can overlap. `ANY_LYMPHOID_MALIGNANCY` is their union and counts 
 | Plasma-cell neoplasms | 9 | 45 (1.11%) | 5 | 25 (0.88%) | -0.23 | -0.023 | 0.676 |
 | ANY_LYMPHOID_MALIGNANCY | 132 | 660 (16.28%) | 124 | 620 (21.83%) | 5.55 | 0.142 | 0.009 |
 | Total cohort denominator | 811 | 4,055 (100.00%) | 568 | 2,840 (100.00%) | — | — | — |
+<!-- ACUTE_THROMBOSIS -->
+# Acute Thrombosis by AIHA Type
+
+Warm AIHA is the reference group. Every phenotype searches all 40 diagnosis positions. Code-specific families can overlap; each composite counts a hospitalization once.
+
+`ANY_VTE` is the union of pulmonary embolism, acute DVT, splanchnic-vein thrombosis, and other acute venous thrombosis. `ANY_ARTERIAL_THROMBOSIS` is the union of acute ischemic stroke, acute MI, and other acute arterial embolism/thrombosis. `ANY_ACUTE_THROMBOSIS` is the union of those two composites.
+
+| Diagnosis family | Warm unweighted n | Warm weighted n (%) | Cold unweighted n | Cold weighted n (%) | Difference, pp | SMD | P-value | FDR-adjusted p |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Acute pulmonary embolism | 29 | 145 (3.58%) | 9 | 45 (1.58%) | -1.99 | -0.126 | 0.026 | 0.262 |
+| Acute deep-vein thrombosis | 25 | 125 (3.08%) | 17 | 85 (2.99%) | -0.09 | -0.005 | 0.924 | 0.924 |
+| Splanchnic-vein thrombosis | 5 | 25 (0.62%) | 3 | 15 (0.53%) | -0.09 | -0.012 | 0.832 | 0.924 |
+| Other acute venous thrombosis | 6 | 30 (0.74%) | 1 | 5 (0.18%) | -0.56 | -0.084 | 0.147 | 0.490 |
+| Acute ischemic stroke | 8 | 40 (0.99%) | 7 | 35 (1.23%) | 0.25 | 0.023 | 0.665 | 0.831 |
+| Acute myocardial infarction | 9 | 45 (1.11%) | 11 | 55 (1.94%) | 0.83 | 0.068 | 0.206 | 0.515 |
+| Other acute arterial embolism or thrombosis | 3 | 15 (0.37%) | 1 | 5 (0.18%) | -0.19 | -0.037 | 0.510 | 0.729 |
+| ANY_VTE | 54 | 270 (6.66%) | 24 | 120 (4.23%) | -2.43 | -0.107 | 0.054 | 0.271 |
+| ANY_ARTERIAL_THROMBOSIS | 20 | 100 (2.47%) | 19 | 95 (3.35%) | 0.88 | 0.052 | 0.333 | 0.608 |
+| ANY_ACUTE_THROMBOSIS | 71 | 355 (8.75%) | 42 | 210 (7.39%) | -1.36 | -0.05 | 0.365 | 0.608 |
+| Total cohort denominator | 811 | 4,055 (100.00%) | 568 | 2,840 (100.00%) | — | — | — | — |
